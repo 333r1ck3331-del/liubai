@@ -20,9 +20,7 @@
     --warm: #c9a876;
     --shadow: rgba(31, 29, 26, 0.08);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   html, body {
     background: var(--bg);
     color: var(--ink);
@@ -32,227 +30,111 @@
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
-
   body {
     background-image:
       radial-gradient(circle at 15% 10%, rgba(201, 168, 118, 0.08) 0%, transparent 40%),
       radial-gradient(circle at 85% 80%, rgba(139, 58, 47, 0.05) 0%, transparent 50%);
     background-attachment: fixed;
   }
-
   .grain {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.4;
-    mix-blend-mode: multiply;
-    z-index: 1;
+    position: fixed; inset: 0; pointer-events: none;
+    opacity: 0.4; mix-blend-mode: multiply; z-index: 1;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
   }
-
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 60px 32px 120px;
-    position: relative;
-    z-index: 2;
-  }
-
+  .container { max-width: 1100px; margin: 0 auto; padding: 60px 32px 120px; position: relative; z-index: 2; }
   header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 80px;
-    padding-bottom: 28px;
-    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 80px; padding-bottom: 28px; border-bottom: 1px solid var(--line);
   }
-
   .brand h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 38px;
-    letter-spacing: 0.02em;
-    line-height: 1;
-    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif; font-weight: 500;
+    font-size: 38px; letter-spacing: 0.02em; line-height: 1; color: var(--ink);
   }
-
   .brand h1 .cn {
-    font-family: 'Noto Serif SC', serif;
-    font-weight: 400;
-    font-size: 20px;
-    margin-left: 14px;
-    color: var(--ink-soft);
-    letter-spacing: 0.4em;
+    font-family: 'Noto Serif SC', serif; font-weight: 400; font-size: 20px;
+    margin-left: 14px; color: var(--ink-soft); letter-spacing: 0.4em;
   }
-
   .brand p {
-    margin-top: 10px;
-    font-size: 13px;
-    color: var(--ink-mute);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    margin-top: 10px; font-size: 13px; color: var(--ink-mute);
+    letter-spacing: 0.15em; text-transform: uppercase;
     font-family: 'JetBrains Mono', monospace;
   }
-
   .settings-btn {
-    background: transparent;
-    border: 1px solid var(--line);
-    padding: 10px 20px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--ink-soft);
-    cursor: pointer;
-    text-transform: uppercase;
+    background: transparent; border: 1px solid var(--line); padding: 10px 20px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
+    color: var(--ink-soft); cursor: pointer; text-transform: uppercase;
     transition: all 0.3s ease;
   }
-  .settings-btn:hover {
-    border-color: var(--ink);
-    color: var(--ink);
-  }
-
+  .settings-btn:hover { border-color: var(--ink); color: var(--ink); }
   .settings-panel {
-    background: var(--bg-alt);
-    border: 1px solid var(--line);
-    padding: 28px 32px;
-    margin-bottom: 40px;
-    display: none;
+    background: var(--bg-alt); border: 1px solid var(--line);
+    padding: 28px 32px; margin-bottom: 40px; display: none;
   }
   .settings-panel.open { display: block; animation: fadeIn 0.4s ease; }
-
   .settings-panel label {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    margin-bottom: 10px;
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 10px;
   }
   .settings-panel input {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--line);
-    padding: 12px 14px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.2s;
+    width: 100%; background: var(--bg); border: 1px solid var(--line);
+    padding: 12px 14px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    color: var(--ink); outline: none; transition: border-color 0.2s;
   }
   .settings-panel input:focus { border-color: var(--accent); }
-  .settings-hint {
-    margin-top: 10px;
-    font-size: 12px;
-    color: var(--ink-mute);
-    line-height: 1.6;
-  }
+  .settings-hint { margin-top: 10px; font-size: 12px; color: var(--ink-mute); line-height: 1.6; }
   .settings-hint a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
-
   .composer { margin-bottom: 60px; }
-
   .composer-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 22px;
-    color: var(--ink-soft);
-    margin-bottom: 8px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 22px; color: var(--ink-soft); margin-bottom: 8px;
   }
   .composer-label .cn {
-    font-family: 'Noto Serif SC', serif;
-    font-style: normal;
-    font-size: 15px;
-    color: var(--ink-mute);
-    margin-left: 12px;
-    letter-spacing: 0.2em;
+    font-family: 'Noto Serif SC', serif; font-style: normal; font-size: 15px;
+    color: var(--ink-mute); margin-left: 12px; letter-spacing: 0.2em;
   }
-
   textarea.idea-input {
-    width: 100%;
-    min-height: 140px;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--line);
-    padding: 16px 0;
-    font-family: 'Noto Serif SC', serif;
-    font-size: 22px;
-    line-height: 1.6;
-    color: var(--ink);
-    resize: vertical;
-    outline: none;
-    transition: border-color 0.3s;
+    width: 100%; min-height: 140px; background: transparent; border: none;
+    border-bottom: 1px solid var(--line); padding: 16px 0;
+    font-family: 'Noto Serif SC', serif; font-size: 22px; line-height: 1.6;
+    color: var(--ink); resize: vertical; outline: none; transition: border-color 0.3s;
   }
   textarea.idea-input::placeholder {
-    color: var(--ink-mute);
-    font-style: italic;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
+    color: var(--ink-mute); font-style: italic;
+    font-family: 'Cormorant Garamond', serif; font-size: 22px;
   }
   textarea.idea-input:focus { border-bottom-color: var(--accent); }
-
   .composer-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 24px;
-    flex-wrap: wrap;
-    gap: 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 24px; flex-wrap: wrap; gap: 16px;
   }
-
   .tone-selector { display: flex; gap: 4px; flex-wrap: wrap; }
   .tone-chip {
-    background: transparent;
-    border: 1px solid var(--line);
-    padding: 8px 16px;
-    font-family: 'Noto Serif SC', serif;
-    font-size: 13px;
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    letter-spacing: 0.05em;
+    background: transparent; border: 1px solid var(--line); padding: 8px 16px;
+    font-family: 'Noto Serif SC', serif; font-size: 13px; color: var(--ink-soft);
+    cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.05em;
   }
   .tone-chip:hover { border-color: var(--ink-soft); }
-  .tone-chip.active {
-    background: var(--ink);
-    color: var(--bg);
-    border-color: var(--ink);
-  }
-
+  .tone-chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   .generate-btn {
-    background: var(--ink);
-    color: var(--bg);
-    border: none;
-    padding: 16px 38px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    background: var(--ink); color: var(--bg); border: none; padding: 16px 38px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.3em;
+    text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;
   }
   .generate-btn:hover:not(:disabled) { background: var(--accent); }
   .generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
   .loading { display: none; text-align: center; padding: 60px 0; }
   .loading.show { display: block; }
   .loading-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 20px;
-    color: var(--ink-soft);
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 20px; color: var(--ink-soft);
   }
   .loading-dots { display: inline-block; margin-left: 8px; }
   .loading-dots span {
-    display: inline-block;
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--accent);
-    margin: 0 2px;
-    animation: pulse 1.4s ease-in-out infinite;
+    display: inline-block; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--accent); margin: 0 2px; animation: pulse 1.4s ease-in-out infinite;
   }
   .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
   .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
-
   @keyframes pulse {
     0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
     40% { opacity: 1; transform: scale(1); }
@@ -261,288 +143,141 @@
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   .output { display: none; }
   .output.show { display: block; animation: fadeIn 0.6s ease; }
-
   .output-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 40px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--ink-mute);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    margin-bottom: 40px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-mute); letter-spacing: 0.15em; text-transform: uppercase;
   }
-
   .output-actions { display: flex; gap: 16px; }
   .output-actions button {
-    background: transparent;
-    border: none;
-    color: var(--ink-soft);
-    cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 4px 0;
-    border-bottom: 1px solid transparent;
+    background: transparent; border: none; color: var(--ink-soft); cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 4px 0; border-bottom: 1px solid transparent;
     transition: border-color 0.2s, color 0.2s;
   }
-  .output-actions button:hover {
-    color: var(--ink);
-    border-bottom-color: var(--accent);
-  }
-
+  .output-actions button:hover { color: var(--ink); border-bottom-color: var(--accent); }
   .section { margin-bottom: 56px; animation: fadeIn 0.6s ease backwards; }
   .section:nth-child(1) { animation-delay: 0.05s; }
   .section:nth-child(2) { animation-delay: 0.15s; }
   .section:nth-child(3) { animation-delay: 0.25s; }
   .section:nth-child(4) { animation-delay: 0.35s; }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
+  .section-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; }
   .section-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 28px;
-    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 28px; color: var(--accent);
   }
   .section-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--ink);
-    letter-spacing: 0.1em;
+    font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 500;
+    color: var(--ink); letter-spacing: 0.1em;
   }
   .section-title-en {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 14px;
-    color: var(--ink-mute);
-    margin-left: 4px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 14px; color: var(--ink-mute); margin-left: 4px;
   }
-
-  .strategy {
-    background: var(--bg-alt);
-    padding: 28px 32px;
-    border-left: 2px solid var(--accent);
-  }
+  .strategy { background: var(--bg-alt); padding: 28px 32px; border-left: 2px solid var(--accent); }
   .strategy-row {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 20px;
-    padding: 12px 0;
-    border-bottom: 1px dashed var(--line);
+    display: grid; grid-template-columns: 120px 1fr; gap: 20px;
+    padding: 12px 0; border-bottom: 1px dashed var(--line);
   }
   .strategy-row:last-child { border-bottom: none; }
   .strategy-key {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--ink-mute);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding-top: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-mute);
+    letter-spacing: 0.2em; text-transform: uppercase; padding-top: 4px;
   }
   .strategy-val {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 15px;
-    color: var(--ink);
-    line-height: 1.7;
+    font-family: 'Noto Serif SC', serif; font-size: 15px;
+    color: var(--ink); line-height: 1.7;
   }
-
   .titles { display: grid; gap: 16px; }
   .title-card {
-    background: var(--bg-alt);
-    padding: 22px 26px;
-    position: relative;
+    background: var(--bg-alt); padding: 22px 26px; position: relative;
     transition: transform 0.3s, box-shadow 0.3s;
   }
-  .title-card:hover {
-    transform: translateX(4px);
-    box-shadow: -4px 4px 0 var(--ink);
-  }
+  .title-card:hover { transform: translateX(4px); box-shadow: -4px 4px 0 var(--ink); }
   .title-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent);
+    letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 8px;
   }
   .title-text {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 19px;
-    font-weight: 500;
-    line-height: 1.5;
-    color: var(--ink);
+    font-family: 'Noto Serif SC', serif; font-size: 19px; font-weight: 500;
+    line-height: 1.5; color: var(--ink);
   }
   .copy-mini {
-    position: absolute;
-    top: 22px; right: 26px;
-    background: transparent;
-    border: none;
-    color: var(--ink-mute);
-    cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    position: absolute; top: 22px; right: 26px; background: transparent; border: none;
+    color: var(--ink-mute); cursor: pointer; font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
   }
   .copy-mini:hover { color: var(--accent); }
-
-  .platforms {
-    border: 1px solid var(--line);
-    background: var(--bg-alt);
-  }
+  .platforms { border: 1px solid var(--line); background: var(--bg-alt); }
   .platform-tabs { display: flex; border-bottom: 1px solid var(--line); }
   .platform-tab {
-    flex: 1;
-    background: transparent;
-    border: none;
-    border-right: 1px solid var(--line);
-    padding: 16px;
-    font-family: 'Noto Serif SC', serif;
-    font-size: 14px;
-    color: var(--ink-mute);
-    cursor: pointer;
-    letter-spacing: 0.1em;
+    flex: 1; background: transparent; border: none; border-right: 1px solid var(--line);
+    padding: 16px; font-family: 'Noto Serif SC', serif; font-size: 14px;
+    color: var(--ink-mute); cursor: pointer; letter-spacing: 0.1em;
   }
   .platform-tab:last-child { border-right: none; }
   .platform-tab:hover { color: var(--ink-soft); }
-  .platform-tab.active {
-    background: var(--bg);
-    color: var(--ink);
-    font-weight: 500;
-  }
+  .platform-tab.active { background: var(--bg); color: var(--ink); font-weight: 500; }
   .platform-tab .en {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 11px;
-    margin-left: 6px;
-    color: var(--ink-mute);
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 11px; margin-left: 6px; color: var(--ink-mute);
   }
   .platform-content { padding: 32px; display: none; }
   .platform-content.active { display: block; animation: fadeIn 0.3s ease; }
   .platform-content pre {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 15px;
-    line-height: 1.85;
-    color: var(--ink);
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    font-family: 'Noto Serif SC', serif; font-size: 15px; line-height: 1.85;
+    color: var(--ink); white-space: pre-wrap; word-wrap: break-word;
   }
-
   .visuals { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .visual-card {
-    background: var(--bg-alt);
-    padding: 24px;
-    border-top: 2px solid var(--warm);
-  }
+  .visual-card { background: var(--bg-alt); padding: 24px; border-top: 2px solid var(--warm); }
   .visual-card h4 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--ink-mute);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-mute);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;
   }
   .visual-card p {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 14px;
-    line-height: 1.75;
-    color: var(--ink);
+    font-family: 'Noto Serif SC', serif; font-size: 14px; line-height: 1.75; color: var(--ink);
   }
-
   .error {
-    background: #f8e8e3;
-    border-left: 3px solid var(--accent);
-    padding: 16px 20px;
-    margin-top: 20px;
-    font-size: 14px;
-    color: var(--accent);
-    display: none;
+    background: #f8e8e3; border-left: 3px solid var(--accent); padding: 16px 20px;
+    margin-top: 20px; font-size: 14px; color: var(--accent); display: none;
   }
   .error.show { display: block; }
-
-  .history {
-    margin-top: 100px;
-    padding-top: 40px;
-    border-top: 1px solid var(--line);
-  }
+  .history { margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--line); }
   .history-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 22px;
-    color: var(--ink-soft);
-    margin-bottom: 24px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 22px; color: var(--ink-soft); margin-bottom: 24px;
   }
   .history-title .cn {
-    font-family: 'Noto Serif SC', serif;
-    font-style: normal;
-    font-size: 14px;
-    color: var(--ink-mute);
-    margin-left: 12px;
-    letter-spacing: 0.2em;
+    font-family: 'Noto Serif SC', serif; font-style: normal; font-size: 14px;
+    color: var(--ink-mute); margin-left: 12px; letter-spacing: 0.2em;
   }
   .history-list { display: grid; gap: 12px; }
   .history-item {
-    background: transparent;
-    border: 1px solid var(--line);
-    padding: 16px 20px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
+    background: transparent; border: 1px solid var(--line); padding: 16px 20px;
+    cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; gap: 16px;
   }
-  .history-item:hover {
-    border-color: var(--ink-soft);
-    background: var(--bg-alt);
-  }
+  .history-item:hover { border-color: var(--ink-soft); background: var(--bg-alt); }
   .history-item-text {
-    flex: 1;
-    font-family: 'Noto Serif SC', serif;
-    font-size: 14px;
-    color: var(--ink);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    flex: 1; font-family: 'Noto Serif SC', serif; font-size: 14px; color: var(--ink);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .history-item-time {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--ink-mute);
-    letter-spacing: 0.1em;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--ink-mute); letter-spacing: 0.1em;
   }
   .history-empty {
-    color: var(--ink-mute);
-    font-style: italic;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
+    color: var(--ink-mute); font-style: italic;
+    font-family: 'Cormorant Garamond', serif; font-size: 16px;
   }
-
   footer {
-    margin-top: 80px;
-    padding-top: 32px;
-    border-top: 1px solid var(--line);
-    text-align: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--ink-mute);
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
+    margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--line);
+    text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--ink-mute); letter-spacing: 0.3em; text-transform: uppercase;
   }
-
   @media (max-width: 700px) {
     .container { padding: 32px 20px 80px; }
     header { flex-direction: column; gap: 20px; }
@@ -664,7 +399,7 @@
     </div>
   </div>
 
-  <footer>Stage 0 · v0.1 · Local Only · No Tracking</footer>
+  <footer>Stage 0 · v0.2 · Local Only · No Tracking</footer>
 </div>
 
 <script>
@@ -712,48 +447,12 @@
       document.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.platform-content').forEach(c => c.classList.remove('active'));
       tab.classList.add('active');
-      document.querySelector(`.platform-content[data-platform="${p}"]`).classList.add('active');
+      document.querySelector('.platform-content[data-platform="' + p + '"]').classList.add('active');
     });
   });
 
   function buildPrompt(idea, tone) {
-    return `你是一位深耕"心理学 + 社会学 + 时事"赛道的内容策划，目标受众是 22-40 岁、在城市生活、内心需要被理解的人。你的内容核心是"心理抚慰"——不说教、不鸡汤、不贩卖焦虑，而是用克制和共情让人感觉"被看见"。
-
-【本次创作基调】${tone}
-
-【用户的想法/素材】
-${idea}
-
-请基于这个想法生成完整内容包，严格输出 JSON（不要任何额外文字、不要 markdown 代码块）：
-
-{
-  "strategy": {
-    "track": "建议赛道（如：心理观察 / 都市情绪 / 时事共情 / 自我和解）",
-    "audience": "一句话描述这条内容真正在对谁说话",
-    "platform_fit": "最适合的主战场，并简短说明原因",
-    "core_emotion": "这条内容最想唤起的核心情绪（用 1-2 个词）",
-    "hook_angle": "切入角度的核心洞察（30 字内，要锋利）",
-    "best_time": "建议发布时间段（结合心理抚慰内容的传播规律）"
-  },
-  "titles": [
-    { "type": "情绪共鸣型", "text": "..." },
-    { "type": "洞察金句型", "text": "..." },
-    { "type": "好奇引导型", "text": "..." }
-  ],
-  "scripts": {
-    "douyin": "60-90 秒口播脚本。开头 3 秒必须抓人但不要喊叫式钩子。用'你'称呼观众。语言口语化、有停顿感、留白。结尾不要强行升华，给一个让人安静下来的句子即可。",
-    "xiaohongshu": "小红书图文版。第一行是标题（可带 1-2 个 emoji，但克制）。正文 200-350 字，用短段落，每段空行。结尾用一句话邀请评论，不要硬带话题。最后单独一行给 5-7 个 # 话题标签。",
-    "gongzhonghao": "公众号短文版。500-800 字。引言要慢，要先让读者放下防备。中段引入心理学/社会学的一个具体概念或视角（要准确，不要瞎编名词）。结尾留白，可以是一个问句或一个意象，不要总结陈词。"
-  },
-  "cover_copy": "封面上最显眼的那句话，8-14 字，要让人愿意停下滑动",
-  "video_prompt": "如果用 AI 视频工具（可灵/即梦等）生成画面，给一段中文提示词：场景、光线、镜头、节奏、情绪氛围。要安静、有呼吸感，避免炫技。50-80 字。"
-}
-
-【创作底线】
-- 不堆砌网络流行语
-- 不做廉价的情绪渲染（如"破防了""狠狠共情了"）
-- 提到心理学概念时必须准确（如依恋类型、习得性无助、情绪粒度等真实存在的概念）
-- 给读者尊严，不把他们当需要被启蒙的人`;
+    return '你是一位深耕"心理学 + 社会学 + 时事"赛道的内容策划，目标受众是 22-40 岁、在城市生活、内心需要被理解的人。你的内容核心是"心理抚慰"——不说教、不鸡汤、不贩卖焦虑，而是用克制和共情让人感觉"被看见"。\n\n【本次创作基调】' + tone + '\n\n【用户的想法/素材】\n' + idea + '\n\n请基于这个想法生成完整内容包，严格输出有效 JSON（不要任何额外文字、不要 markdown 围栏、不要在 JSON 之后加任何解释）：\n\n{\n  "strategy": {\n    "track": "建议赛道（如：心理观察 / 都市情绪 / 时事共情 / 自我和解）",\n    "audience": "一句话描述这条内容真正在对谁说话",\n    "platform_fit": "最适合的主战场，并简短说明原因",\n    "core_emotion": "这条内容最想唤起的核心情绪（用 1-2 个词）",\n    "hook_angle": "切入角度的核心洞察（30 字内，要锋利）",\n    "best_time": "建议发布时间段（结合心理抚慰内容的传播规律）"\n  },\n  "titles": [\n    { "type": "情绪共鸣型", "text": "..." },\n    { "type": "洞察金句型", "text": "..." },\n    { "type": "好奇引导型", "text": "..." }\n  ],\n  "scripts": {\n    "douyin": "60-90 秒口播脚本。开头 3 秒抓人但不要喊叫式钩子。用你称呼观众。语言口语化、有停顿感、留白。结尾不要强行升华。",\n    "xiaohongshu": "小红书图文版。第一行是标题（可带 1-2 个 emoji，但克制）。正文 200-350 字，用短段落。结尾邀请评论。最后单独一行给 5-7 个 # 话题标签。",\n    "gongzhonghao": "公众号短文版。500-800 字。引言慢，要先让读者放下防备。中段引入心理学/社会学的具体概念（要准确）。结尾留白。"\n  },\n  "cover_copy": "封面上最显眼的那句话，8-14 字",\n  "video_prompt": "AI 视频提示词：场景、光线、镜头、节奏、情绪氛围。要安静、有呼吸感。50-80 字。"\n}\n\n创作底线：不堆砌网络流行语；不做廉价情绪渲染（如"破防了""狠狠共情了"）；提到心理学概念必须准确（依恋类型、习得性无助、情绪粒度等真实概念）；给读者尊严。\n\n再次强调：只输出 JSON 对象本身，前后不要有任何其他字符。';
   }
 
   generateBtn.addEventListener('click', generate);
@@ -779,7 +478,8 @@ ${idea}
 
     try {
       const result = await callDeepSeek(idea, currentTone, apiKey);
-      currentResult = { idea, tone: currentTone, timestamp: new Date().toISOString(), ...result };
+      currentResult = { idea: idea, tone: currentTone, timestamp: new Date().toISOString() };
+      Object.assign(currentResult, result);
       renderResult(currentResult);
     } catch (err) {
       showError(err.message || '生成失败，请稍后重试。');
@@ -789,15 +489,29 @@ ${idea}
     }
   }
 
+  // 更宽容的 JSON 提取：剥掉 markdown 围栏和多余文字
+  function extractJSON(str) {
+    let s = String(str).trim();
+    // 去除 markdown 代码围栏
+    s = s.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '');
+    // 找最外层的 {}
+    const first = s.indexOf('{');
+    const last = s.lastIndexOf('}');
+    if (first !== -1 && last !== -1 && last > first) {
+      s = s.slice(first, last + 1);
+    }
+    return s;
+  }
+
   async function callDeepSeek(idea, tone, apiKey) {
     const prompt = buildPrompt(idea, tone);
     const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
       body: JSON.stringify({
         model: 'deepseek-chat',
         messages: [
-          { role: 'system', content: '你是中文内容策划专家。严格输出有效 JSON，不要任何额外文字、不要 markdown 围栏。' },
+          { role: 'system', content: '你是中文内容策划专家。严格输出有效 JSON 对象本身，不要任何额外文字、不要 markdown 围栏、JSON 之后不要任何字符。' },
           { role: 'user', content: prompt }
         ],
         temperature: 0.8,
@@ -808,40 +522,44 @@ ${idea}
 
     if (!res.ok) {
       const errText = await res.text();
-      throw new Error(`DeepSeek API 错误 (${res.status})：${errText.slice(0, 200)}`);
+      throw new Error('DeepSeek API 错误 (' + res.status + ')：' + errText.slice(0, 200));
     }
 
     const data = await res.json();
-    const content = data.choices?.[0]?.message?.content;
+    const content = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
     if (!content) throw new Error('返回内容为空');
 
-    try { return JSON.parse(content); }
-    catch (e) {
-      const match = content.match(/\{[\s\S]*\}/);
-      if (match) return JSON.parse(match[0]);
-      throw new Error('AI 返回的不是有效 JSON，请重试');
+    // 三层兜底解析
+    try {
+      return JSON.parse(content);
+    } catch (e1) {
+      try {
+        return JSON.parse(extractJSON(content));
+      } catch (e2) {
+        console.error('原始返回:', content);
+        throw new Error('AI 返回格式异常，再点一次"生成内容包"通常就好。');
+      }
     }
   }
 
   function renderResult(r) {
-    $('metaInfo').textContent = `${r.tone} · ${new Date(r.timestamp).toLocaleString('zh-CN')}`;
+    $('metaInfo').textContent = r.tone + ' · ' + new Date(r.timestamp).toLocaleString('zh-CN');
     const s = r.strategy || {};
-    $('strategy').innerHTML = `
-      <div class="strategy-row"><div class="strategy-key">Track</div><div class="strategy-val">${escape(s.track)}</div></div>
-      <div class="strategy-row"><div class="strategy-key">Audience</div><div class="strategy-val">${escape(s.audience)}</div></div>
-      <div class="strategy-row"><div class="strategy-key">Platform</div><div class="strategy-val">${escape(s.platform_fit)}</div></div>
-      <div class="strategy-row"><div class="strategy-key">Emotion</div><div class="strategy-val">${escape(s.core_emotion)}</div></div>
-      <div class="strategy-row"><div class="strategy-key">Hook</div><div class="strategy-val">${escape(s.hook_angle)}</div></div>
-      <div class="strategy-row"><div class="strategy-key">Timing</div><div class="strategy-val">${escape(s.best_time)}</div></div>
-    `;
+    $('strategy').innerHTML =
+      '<div class="strategy-row"><div class="strategy-key">Track</div><div class="strategy-val">' + escape(s.track) + '</div></div>' +
+      '<div class="strategy-row"><div class="strategy-key">Audience</div><div class="strategy-val">' + escape(s.audience) + '</div></div>' +
+      '<div class="strategy-row"><div class="strategy-key">Platform</div><div class="strategy-val">' + escape(s.platform_fit) + '</div></div>' +
+      '<div class="strategy-row"><div class="strategy-key">Emotion</div><div class="strategy-val">' + escape(s.core_emotion) + '</div></div>' +
+      '<div class="strategy-row"><div class="strategy-key">Hook</div><div class="strategy-val">' + escape(s.hook_angle) + '</div></div>' +
+      '<div class="strategy-row"><div class="strategy-key">Timing</div><div class="strategy-val">' + escape(s.best_time) + '</div></div>';
 
-    const titlesHtml = (r.titles || []).map(t => `
-      <div class="title-card">
-        <div class="title-tag">${escape(t.type)}</div>
-        <div class="title-text">${escape(t.text)}</div>
-        <button class="copy-mini" data-copy="${encodeURIComponent(t.text || '')}">复制</button>
-      </div>
-    `).join('');
+    const titlesHtml = (r.titles || []).map(function(t) {
+      return '<div class="title-card">' +
+        '<div class="title-tag">' + escape(t.type) + '</div>' +
+        '<div class="title-text">' + escape(t.text) + '</div>' +
+        '<button class="copy-mini" data-copy="' + encodeURIComponent(t.text || '') + '">复制</button>' +
+        '</div>';
+    }).join('');
     $('titles').innerHTML = titlesHtml;
 
     const scripts = r.scripts || {};
@@ -854,13 +572,13 @@ ${idea}
 
     output.classList.add('show');
 
-    document.querySelectorAll('.copy-mini').forEach(btn => {
-      btn.addEventListener('click', () => {
+    document.querySelectorAll('.copy-mini').forEach(function(btn) {
+      btn.addEventListener('click', function() {
         const text = decodeURIComponent(btn.dataset.copy);
-        navigator.clipboard.writeText(text).then(() => {
+        navigator.clipboard.writeText(text).then(function() {
           const old = btn.textContent;
           btn.textContent = '已复制';
-          setTimeout(() => { btn.textContent = old; }, 1200);
+          setTimeout(function() { btn.textContent = old; }, 1200);
         });
       });
     });
@@ -868,9 +586,9 @@ ${idea}
 
   function escape(str) {
     if (str == null) return '';
-    return String(str).replace(/[&<>"']/g, c =>
-      ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]
-    );
+    return String(str).replace(/[&<>"']/g, function(c) {
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
   }
 
   function showError(msg) {
@@ -878,18 +596,18 @@ ${idea}
     errorBox.classList.add('show');
   }
 
-  $('exportJson').addEventListener('click', () => {
+  $('exportJson').addEventListener('click', function() {
     if (!currentResult) return;
     const blob = new Blob([JSON.stringify(currentResult, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `liubai_${Date.now()}.json`;
+    a.download = 'liubai_' + Date.now() + '.json';
     a.click();
     URL.revokeObjectURL(url);
   });
 
-  $('saveBtn').addEventListener('click', () => {
+  $('saveBtn').addEventListener('click', function() {
     if (!currentResult) return;
     const list = JSON.parse(localStorage.getItem(STORAGE.history) || '[]');
     list.unshift(currentResult);
@@ -899,7 +617,7 @@ ${idea}
     const btn = $('saveBtn');
     const old = btn.textContent;
     btn.textContent = '已保存';
-    setTimeout(() => { btn.textContent = old; }, 1500);
+    setTimeout(function() { btn.textContent = old; }, 1500);
   });
 
   function renderHistory() {
@@ -909,20 +627,20 @@ ${idea}
       container.innerHTML = '<div class="history-empty">还没有保存的内容。</div>';
       return;
     }
-    container.innerHTML = list.map((item, i) => `
-      <div class="history-item" data-idx="${i}">
-        <div class="history-item-text">${escape(item.idea)}</div>
-        <div class="history-item-time">${new Date(item.timestamp).toLocaleDateString('zh-CN')}</div>
-      </div>
-    `).join('');
-    container.querySelectorAll('.history-item').forEach(el => {
-      el.addEventListener('click', () => {
+    container.innerHTML = list.map(function(item, i) {
+      return '<div class="history-item" data-idx="' + i + '">' +
+        '<div class="history-item-text">' + escape(item.idea) + '</div>' +
+        '<div class="history-item-time">' + new Date(item.timestamp).toLocaleDateString('zh-CN') + '</div>' +
+        '</div>';
+    }).join('');
+    container.querySelectorAll('.history-item').forEach(function(el) {
+      el.addEventListener('click', function() {
         const idx = parseInt(el.dataset.idx);
         const item = list[idx];
         currentResult = item;
         ideaInput.value = item.idea;
         currentTone = item.tone;
-        document.querySelectorAll('.tone-chip').forEach(c => {
+        document.querySelectorAll('.tone-chip').forEach(function(c) {
           c.classList.toggle('active', c.dataset.tone === item.tone);
         });
         renderResult(item);
