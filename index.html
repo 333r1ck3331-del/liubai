@@ -3,32 +3,22 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>留白 · 内容生成器</title>
+<title>留白 · 内容研究室</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f4f1ea;
-    --bg-alt: #ebe6dc;
-    --ink: #1f1d1a;
-    --ink-soft: #4a463f;
-    --ink-mute: #8a8378;
-    --line: #d9d2c2;
-    --accent: #8b3a2f;
-    --accent-soft: #b85a48;
-    --warm: #c9a876;
-    --shadow: rgba(31, 29, 26, 0.08);
+    --bg: #f4f1ea; --bg-alt: #ebe6dc; --ink: #1f1d1a;
+    --ink-soft: #4a463f; --ink-mute: #8a8378; --line: #d9d2c2;
+    --accent: #8b3a2f; --accent-soft: #b85a48; --warm: #c9a876;
+    --green: #6b7d4f; --gold: #b8932f;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
-    background: var(--bg);
-    color: var(--ink);
+    background: var(--bg); color: var(--ink);
     font-family: 'Noto Serif SC', 'Cormorant Garamond', serif;
-    font-weight: 400;
-    line-height: 1.7;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+    line-height: 1.7; min-height: 100vh; -webkit-font-smoothing: antialiased;
   }
   body {
     background-image:
@@ -37,22 +27,22 @@
     background-attachment: fixed;
   }
   .grain {
-    position: fixed; inset: 0; pointer-events: none;
-    opacity: 0.4; mix-blend-mode: multiply; z-index: 1;
+    position: fixed; inset: 0; pointer-events: none; opacity: 0.4;
+    mix-blend-mode: multiply; z-index: 1;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
   }
   .container { max-width: 1100px; margin: 0 auto; padding: 60px 32px 120px; position: relative; z-index: 2; }
   header {
     display: flex; justify-content: space-between; align-items: flex-start;
-    margin-bottom: 80px; padding-bottom: 28px; border-bottom: 1px solid var(--line);
+    margin-bottom: 60px; padding-bottom: 28px; border-bottom: 1px solid var(--line);
   }
   .brand h1 {
     font-family: 'Cormorant Garamond', serif; font-weight: 500;
-    font-size: 38px; letter-spacing: 0.02em; line-height: 1; color: var(--ink);
+    font-size: 38px; letter-spacing: 0.02em; color: var(--ink);
   }
   .brand h1 .cn {
-    font-family: 'Noto Serif SC', serif; font-weight: 400; font-size: 20px;
-    margin-left: 14px; color: var(--ink-soft); letter-spacing: 0.4em;
+    font-family: 'Noto Serif SC', serif; font-size: 20px; margin-left: 14px;
+    color: var(--ink-soft); letter-spacing: 0.4em;
   }
   .brand p {
     margin-top: 10px; font-size: 13px; color: var(--ink-mute);
@@ -63,7 +53,6 @@
     background: transparent; border: 1px solid var(--line); padding: 10px 20px;
     font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
     color: var(--ink-soft); cursor: pointer; text-transform: uppercase;
-    transition: all 0.3s ease;
   }
   .settings-btn:hover { border-color: var(--ink); color: var(--ink); }
   .settings-panel {
@@ -78,11 +67,26 @@
   .settings-panel input {
     width: 100%; background: var(--bg); border: 1px solid var(--line);
     padding: 12px 14px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
-    color: var(--ink); outline: none; transition: border-color 0.2s;
+    color: var(--ink); outline: none;
   }
   .settings-panel input:focus { border-color: var(--accent); }
   .settings-hint { margin-top: 10px; font-size: 12px; color: var(--ink-mute); line-height: 1.6; }
-  .settings-hint a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+  .settings-hint a { color: var(--accent); border-bottom: 1px solid var(--accent); text-decoration: none; }
+
+  .model-switcher {
+    display: flex; gap: 0; margin-bottom: 24px;
+    border: 1px solid var(--line); width: fit-content;
+  }
+  .model-btn {
+    background: transparent; border: none; padding: 10px 20px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.15em; color: var(--ink-soft); cursor: pointer;
+    text-transform: uppercase; border-right: 1px solid var(--line);
+  }
+  .model-btn:last-child { border-right: none; }
+  .model-btn.active { background: var(--ink); color: var(--bg); }
+  .model-btn .label { display: block; font-size: 9px; opacity: 0.7; margin-top: 2px; letter-spacing: 0.1em; }
+
   .composer { margin-bottom: 60px; }
   .composer-label {
     font-family: 'Cormorant Garamond', serif; font-style: italic;
@@ -96,11 +100,11 @@
     width: 100%; min-height: 140px; background: transparent; border: none;
     border-bottom: 1px solid var(--line); padding: 16px 0;
     font-family: 'Noto Serif SC', serif; font-size: 22px; line-height: 1.6;
-    color: var(--ink); resize: vertical; outline: none; transition: border-color 0.3s;
+    color: var(--ink); resize: vertical; outline: none;
   }
   textarea.idea-input::placeholder {
     color: var(--ink-mute); font-style: italic;
-    font-family: 'Cormorant Garamond', serif; font-size: 22px;
+    font-family: 'Cormorant Garamond', serif;
   }
   textarea.idea-input:focus { border-bottom-color: var(--accent); }
   .composer-actions {
@@ -111,22 +115,27 @@
   .tone-chip {
     background: transparent; border: 1px solid var(--line); padding: 8px 16px;
     font-family: 'Noto Serif SC', serif; font-size: 13px; color: var(--ink-soft);
-    cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.05em;
+    cursor: pointer; letter-spacing: 0.05em;
   }
   .tone-chip:hover { border-color: var(--ink-soft); }
   .tone-chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   .generate-btn {
     background: var(--ink); color: var(--bg); border: none; padding: 16px 38px;
     font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.3em;
-    text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;
+    text-transform: uppercase; cursor: pointer;
   }
   .generate-btn:hover:not(:disabled) { background: var(--accent); }
   .generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
   .loading { display: none; text-align: center; padding: 60px 0; }
   .loading.show { display: block; }
   .loading-text {
     font-family: 'Cormorant Garamond', serif; font-style: italic;
     font-size: 20px; color: var(--ink-soft);
+  }
+  .loading-sub {
+    margin-top: 12px; font-size: 12px; color: var(--ink-mute);
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.2em;
   }
   .loading-dots { display: inline-block; margin-left: 8px; }
   .loading-dots span {
@@ -143,6 +152,7 @@
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
   .output { display: none; }
   .output.show { display: block; animation: fadeIn 0.6s ease; }
   .output-meta {
@@ -156,14 +166,18 @@
     background: transparent; border: none; color: var(--ink-soft); cursor: pointer;
     font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em;
     text-transform: uppercase; padding: 4px 0; border-bottom: 1px solid transparent;
-    transition: border-color 0.2s, color 0.2s;
   }
   .output-actions button:hover { color: var(--ink); border-bottom-color: var(--accent); }
+
   .section { margin-bottom: 56px; animation: fadeIn 0.6s ease backwards; }
   .section:nth-child(1) { animation-delay: 0.05s; }
-  .section:nth-child(2) { animation-delay: 0.15s; }
-  .section:nth-child(3) { animation-delay: 0.25s; }
-  .section:nth-child(4) { animation-delay: 0.35s; }
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.15s; }
+  .section:nth-child(4) { animation-delay: 0.2s; }
+  .section:nth-child(5) { animation-delay: 0.25s; }
+  .section:nth-child(6) { animation-delay: 0.3s; }
+  .section:nth-child(7) { animation-delay: 0.35s; }
+  .section:nth-child(8) { animation-delay: 0.4s; }
   .section-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; }
   .section-num {
     font-family: 'Cormorant Garamond', serif; font-style: italic;
@@ -177,6 +191,7 @@
     font-family: 'Cormorant Garamond', serif; font-style: italic;
     font-size: 14px; color: var(--ink-mute); margin-left: 4px;
   }
+
   .strategy { background: var(--bg-alt); padding: 28px 32px; border-left: 2px solid var(--accent); }
   .strategy-row {
     display: grid; grid-template-columns: 120px 1fr; gap: 20px;
@@ -187,10 +202,41 @@
     font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-mute);
     letter-spacing: 0.2em; text-transform: uppercase; padding-top: 4px;
   }
-  .strategy-val {
-    font-family: 'Noto Serif SC', serif; font-size: 15px;
-    color: var(--ink); line-height: 1.7;
+  .strategy-val { font-family: 'Noto Serif SC', serif; font-size: 15px; color: var(--ink); line-height: 1.7; }
+
+  .knowledge-card {
+    background: var(--bg-alt); padding: 28px 32px;
+    border-left: 2px solid var(--green); margin-bottom: 16px;
   }
+  .knowledge-concept {
+    font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 500;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .knowledge-source {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 13px; color: var(--ink-mute); margin-bottom: 14px;
+  }
+  .knowledge-explain {
+    font-family: 'Noto Serif SC', serif; font-size: 14px;
+    color: var(--ink-soft); line-height: 1.8; margin-bottom: 12px;
+  }
+  .knowledge-apply {
+    font-size: 13px; color: var(--accent); padding-top: 12px;
+    border-top: 1px dashed var(--line); font-style: italic;
+  }
+  .knowledge-apply::before { content: "→ "; }
+
+  .culture-card {
+    background: var(--bg-alt); padding: 24px 28px;
+    border-left: 2px solid var(--gold); margin-bottom: 12px;
+  }
+  .culture-type {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold);
+    letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .culture-ref { font-family: 'Noto Serif SC', serif; font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
+  .culture-link { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+
   .titles { display: grid; gap: 16px; }
   .title-card {
     background: var(--bg-alt); padding: 22px 26px; position: relative;
@@ -201,16 +247,14 @@
     font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent);
     letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 8px;
   }
-  .title-text {
-    font-family: 'Noto Serif SC', serif; font-size: 19px; font-weight: 500;
-    line-height: 1.5; color: var(--ink);
-  }
+  .title-text { font-family: 'Noto Serif SC', serif; font-size: 19px; font-weight: 500; line-height: 1.5; color: var(--ink); }
   .copy-mini {
     position: absolute; top: 22px; right: 26px; background: transparent; border: none;
     color: var(--ink-mute); cursor: pointer; font-family: 'JetBrains Mono', monospace;
     font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
   }
   .copy-mini:hover { color: var(--accent); }
+
   .platforms { border: 1px solid var(--line); background: var(--bg-alt); }
   .platform-tabs { display: flex; border-bottom: 1px solid var(--line); }
   .platform-tab {
@@ -219,7 +263,6 @@
     color: var(--ink-mute); cursor: pointer; letter-spacing: 0.1em;
   }
   .platform-tab:last-child { border-right: none; }
-  .platform-tab:hover { color: var(--ink-soft); }
   .platform-tab.active { background: var(--bg); color: var(--ink); font-weight: 500; }
   .platform-tab .en {
     font-family: 'Cormorant Garamond', serif; font-style: italic;
@@ -227,24 +270,108 @@
   }
   .platform-content { padding: 32px; display: none; }
   .platform-content.active { display: block; animation: fadeIn 0.3s ease; }
-  .platform-content pre {
-    font-family: 'Noto Serif SC', serif; font-size: 15px; line-height: 1.85;
-    color: var(--ink); white-space: pre-wrap; word-wrap: break-word;
+
+  .shotlist { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .shotlist th {
+    text-align: left; padding: 10px 8px; border-bottom: 2px solid var(--line);
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-mute); font-weight: normal;
   }
-  .visuals { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .visual-card { background: var(--bg-alt); padding: 24px; border-top: 2px solid var(--warm); }
+  .shotlist td {
+    padding: 14px 8px; border-bottom: 1px dashed var(--line); vertical-align: top;
+    font-family: 'Noto Serif SC', serif; line-height: 1.65; color: var(--ink-soft);
+  }
+  .shotlist td.time {
+    font-family: 'JetBrains Mono', monospace; color: var(--accent);
+    font-size: 11px; white-space: nowrap;
+  }
+  .shotlist td.narration { color: var(--ink); font-weight: 500; }
+
+  .article-block {
+    margin-bottom: 24px; padding-bottom: 24px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .article-block:last-child { border-bottom: none; }
+  .article-section-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-mute);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .article-text {
+    font-family: 'Noto Serif SC', serif; font-size: 15px;
+    line-height: 1.85; color: var(--ink); white-space: pre-wrap;
+  }
+  .article-image-cue {
+    background: var(--bg); border: 1px dashed var(--warm); padding: 12px 16px;
+    margin: 12px 0; font-size: 13px; color: var(--ink-soft);
+  }
+  .article-image-cue strong { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em; }
+
+  .visuals-list { display: grid; gap: 16px; }
+  .visual-card {
+    background: var(--bg-alt); padding: 22px 26px; border-top: 2px solid var(--warm);
+  }
   .visual-card h4 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-mute);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .visual-card .prompt {
+    font-family: 'Noto Serif SC', serif; font-size: 14px; line-height: 1.75;
+    color: var(--ink); margin-bottom: 8px;
+  }
+  .visual-card .negative {
+    font-size: 12px; color: var(--ink-mute); padding-top: 8px;
+    border-top: 1px dashed var(--line); margin-top: 8px; font-style: italic;
+  }
+
+  .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .strategy-block {
+    background: var(--bg-alt); padding: 22px 26px;
+    border-top: 2px solid var(--accent-soft);
+  }
+  .strategy-block h4 {
     font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-mute);
     letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;
   }
-  .visual-card p {
-    font-family: 'Noto Serif SC', serif; font-size: 14px; line-height: 1.75; color: var(--ink);
+  .strategy-block p, .strategy-block li {
+    font-family: 'Noto Serif SC', serif; font-size: 14px;
+    line-height: 1.8; color: var(--ink); list-style: none;
   }
+  .strategy-block li { padding: 4px 0; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag-chip {
+    background: var(--bg); border: 1px solid var(--line); padding: 4px 10px;
+    font-size: 12px; color: var(--ink-soft); font-family: 'Noto Serif SC', serif;
+  }
+
+  .scoreboard {
+    background: var(--bg-alt); padding: 28px 32px; border-left: 2px solid var(--ink);
+  }
+  .score-overall {
+    display: flex; align-items: baseline; gap: 12px;
+    padding-bottom: 18px; border-bottom: 1px solid var(--line); margin-bottom: 18px;
+  }
+  .score-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 500;
+    line-height: 1; color: var(--accent);
+  }
+  .score-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-mute); letter-spacing: 0.2em; text-transform: uppercase; }
+  .score-verdict { font-family: 'Noto Serif SC', serif; font-size: 16px; color: var(--ink); margin-top: 6px; font-style: italic; }
+  .score-row {
+    display: grid; grid-template-columns: 140px 1fr 50px; gap: 16px;
+    align-items: center; padding: 8px 0;
+  }
+  .score-row-label { font-family: 'Noto Serif SC', serif; font-size: 13px; color: var(--ink-soft); }
+  .score-bar { height: 4px; background: var(--bg); position: relative; overflow: hidden; }
+  .score-bar-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); transition: width 0.8s ease; }
+  .score-row-num { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink); text-align: right; }
+  .score-advice { margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--ink-soft); line-height: 1.7; font-style: italic; }
+
   .error {
     background: #f8e8e3; border-left: 3px solid var(--accent); padding: 16px 20px;
     margin-top: 20px; font-size: 14px; color: var(--accent); display: none;
   }
   .error.show { display: block; }
+
   .history { margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--line); }
   .history-title {
     font-family: 'Cormorant Garamond', serif; font-style: italic;
@@ -256,9 +383,8 @@
   }
   .history-list { display: grid; gap: 12px; }
   .history-item {
-    background: transparent; border: 1px solid var(--line); padding: 16px 20px;
-    cursor: pointer; display: flex; justify-content: space-between;
-    align-items: center; gap: 16px;
+    border: 1px solid var(--line); padding: 16px 20px; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
   }
   .history-item:hover { border-color: var(--ink-soft); background: var(--bg-alt); }
   .history-item-text {
@@ -269,25 +395,27 @@
     font-family: 'JetBrains Mono', monospace; font-size: 10px;
     color: var(--ink-mute); letter-spacing: 0.1em;
   }
-  .history-empty {
-    color: var(--ink-mute); font-style: italic;
-    font-family: 'Cormorant Garamond', serif; font-size: 16px;
-  }
+  .history-empty { color: var(--ink-mute); font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 16px; }
+
   footer {
     margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--line);
     text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 10px;
     color: var(--ink-mute); letter-spacing: 0.3em; text-transform: uppercase;
   }
+
   @media (max-width: 700px) {
     .container { padding: 32px 20px 80px; }
     header { flex-direction: column; gap: 20px; }
     .brand h1 { font-size: 30px; }
     .brand h1 .cn { display: block; margin-left: 0; margin-top: 6px; }
     textarea.idea-input { font-size: 18px; }
-    .visuals { grid-template-columns: 1fr; }
+    .strategy-grid { grid-template-columns: 1fr; }
     .platform-tab { font-size: 12px; padding: 12px 8px; }
     .platform-tab .en { display: none; }
     .strategy-row { grid-template-columns: 1fr; gap: 4px; }
+    .shotlist { font-size: 12px; }
+    .shotlist th, .shotlist td { padding: 8px 4px; }
+    .score-row { grid-template-columns: 100px 1fr 40px; gap: 8px; }
   }
 </style>
 </head>
@@ -297,7 +425,7 @@
   <header>
     <div class="brand">
       <h1>Liú Bái<span class="cn">留 白</span></h1>
-      <p>content · for · the · quiet · mind</p>
+      <p>content · research · lab</p>
     </div>
     <button class="settings-btn" id="settingsBtn">⚙ 设置</button>
   </header>
@@ -306,9 +434,13 @@
     <label>DeepSeek API Key</label>
     <input type="password" id="apiKey" placeholder="sk-..." autocomplete="off"/>
     <p class="settings-hint">
-      Key 仅保存在你的浏览器本地，不会上传任何服务器。
-      没有 key？前往 <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">DeepSeek 控制台</a> 获取。
+      Key 仅保存在你的浏览器本地。<a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">DeepSeek 控制台 →</a>
     </p>
+  </div>
+
+  <div class="model-switcher">
+    <button class="model-btn" data-model="deepseek-chat">快速版<span class="label">deepseek-chat · 快 · 便宜</span></button>
+    <button class="model-btn active" data-model="deepseek-reasoner">深度版<span class="label">reasoner · 慢 · 高质</span></button>
   </div>
 
   <div class="composer">
@@ -330,6 +462,7 @@
 
   <div class="loading" id="loading">
     <div class="loading-text">正在思考<span class="loading-dots"><span></span><span></span><span></span></span></div>
+    <div class="loading-sub" id="loadingSub">深度版需 30-90 秒，请耐心</div>
   </div>
 
   <div class="output" id="output">
@@ -342,70 +475,68 @@
     </div>
 
     <div class="section">
-      <div class="section-header">
-        <div class="section-num">i</div>
-        <div class="section-title">策略判断<span class="section-title-en">strategy</span></div>
-      </div>
+      <div class="section-header"><div class="section-num">i</div><div class="section-title">价值评分<span class="section-title-en">should you make this</span></div></div>
+      <div class="scoreboard" id="scoreboard"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-num">ii</div><div class="section-title">策略判断<span class="section-title-en">strategy</span></div></div>
       <div class="strategy" id="strategy"></div>
     </div>
 
     <div class="section">
-      <div class="section-header">
-        <div class="section-num">ii</div>
-        <div class="section-title">标题三种<span class="section-title-en">three voices</span></div>
-      </div>
+      <div class="section-header"><div class="section-num">iii</div><div class="section-title">知识锚点<span class="section-title-en">knowledge anchors</span></div></div>
+      <div id="knowledge"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-num">iv</div><div class="section-title">文化坐标<span class="section-title-en">cultural references</span></div></div>
+      <div id="culture"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-num">v</div><div class="section-title">标题三种<span class="section-title-en">three voices</span></div></div>
       <div class="titles" id="titles"></div>
     </div>
 
     <div class="section">
-      <div class="section-header">
-        <div class="section-num">iii</div>
-        <div class="section-title">三平台脚本<span class="section-title-en">scripts by platform</span></div>
-      </div>
+      <div class="section-header"><div class="section-num">vi</div><div class="section-title">三平台脚本<span class="section-title-en">scripts by platform</span></div></div>
       <div class="platforms">
         <div class="platform-tabs" id="platformTabs">
-          <button class="platform-tab active" data-platform="douyin">抖音口播<span class="en">Douyin</span></button>
+          <button class="platform-tab active" data-platform="douyin">抖音分镜<span class="en">Douyin</span></button>
           <button class="platform-tab" data-platform="xiaohongshu">小红书<span class="en">Xiaohongshu</span></button>
           <button class="platform-tab" data-platform="gongzhonghao">公众号<span class="en">WeChat</span></button>
         </div>
-        <div class="platform-content active" data-platform="douyin"><pre id="scriptDouyin"></pre></div>
-        <div class="platform-content" data-platform="xiaohongshu"><pre id="scriptXhs"></pre></div>
-        <div class="platform-content" data-platform="gongzhonghao"><pre id="scriptGzh"></pre></div>
+        <div class="platform-content active" data-platform="douyin"><div id="scriptDouyin"></div></div>
+        <div class="platform-content" data-platform="xiaohongshu"><div id="scriptXhs"></div></div>
+        <div class="platform-content" data-platform="gongzhonghao"><div id="scriptGzh"></div></div>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-header">
-        <div class="section-num">iv</div>
-        <div class="section-title">视觉提示<span class="section-title-en">visual prompts</span></div>
-      </div>
-      <div class="visuals">
-        <div class="visual-card">
-          <h4>封面文案 · Cover Copy</h4>
-          <p id="coverCopy"></p>
-        </div>
-        <div class="visual-card">
-          <h4>AI 视频提示词 · Video Prompt</h4>
-          <p id="videoPrompt"></p>
-        </div>
-      </div>
+      <div class="section-header"><div class="section-num">vii</div><div class="section-title">视觉资产<span class="section-title-en">visual prompts</span></div></div>
+      <div class="visuals-list" id="visuals"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-num">viii</div><div class="section-title">投放策略<span class="section-title-en">distribution</span></div></div>
+      <div class="strategy-grid" id="distribution"></div>
     </div>
   </div>
 
   <div class="history">
     <div class="history-title">已存内容<span class="cn">历 史</span></div>
-    <div class="history-list" id="historyList">
-      <div class="history-empty">还没有保存的内容。</div>
-    </div>
+    <div class="history-list" id="historyList"><div class="history-empty">还没有保存的内容。</div></div>
   </div>
 
-  <footer>Stage 0 · v0.2 · Local Only · No Tracking</footer>
+  <footer>Stage 0 · v0.3 · Research Lab Edition</footer>
 </div>
 
 <script>
-  const STORAGE = { apiKey: 'liubai_apikey', history: 'liubai_history', tone: 'liubai_tone' };
+  const STORAGE = { apiKey: 'liubai_apikey', history: 'liubai_history', tone: 'liubai_tone', model: 'liubai_model' };
   let currentResult = null;
   let currentTone = '温柔抚慰';
+  let currentModel = 'deepseek-reasoner';
 
   const $ = id => document.getElementById(id);
   const settingsBtn = $('settingsBtn');
@@ -430,6 +561,14 @@
     });
   }
 
+  const savedModel = localStorage.getItem(STORAGE.model);
+  if (savedModel) {
+    currentModel = savedModel;
+    document.querySelectorAll('.model-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.model === savedModel);
+    });
+  }
+
   settingsBtn.addEventListener('click', () => settingsPanel.classList.toggle('open'));
 
   document.querySelectorAll('.tone-chip').forEach(chip => {
@@ -438,6 +577,16 @@
       chip.classList.add('active');
       currentTone = chip.dataset.tone;
       localStorage.setItem(STORAGE.tone, currentTone);
+    });
+  });
+
+  document.querySelectorAll('.model-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentModel = btn.dataset.model;
+      localStorage.setItem(STORAGE.model, currentModel);
+      $('loadingSub').textContent = currentModel === 'deepseek-reasoner' ? '深度版需 30-90 秒，请耐心' : '快速版约 5-15 秒';
     });
   });
 
@@ -452,13 +601,117 @@
   });
 
   function buildPrompt(idea, tone) {
-    return '你是一位深耕"心理学 + 社会学 + 时事"赛道的内容策划，目标受众是 22-40 岁、在城市生活、内心需要被理解的人。你的内容核心是"心理抚慰"——不说教、不鸡汤、不贩卖焦虑，而是用克制和共情让人感觉"被看见"。\n\n【本次创作基调】' + tone + '\n\n【用户的想法/素材】\n' + idea + '\n\n请基于这个想法生成完整内容包，严格输出有效 JSON（不要任何额外文字、不要 markdown 围栏、不要在 JSON 之后加任何解释）：\n\n{\n  "strategy": {\n    "track": "建议赛道（如：心理观察 / 都市情绪 / 时事共情 / 自我和解）",\n    "audience": "一句话描述这条内容真正在对谁说话",\n    "platform_fit": "最适合的主战场，并简短说明原因",\n    "core_emotion": "这条内容最想唤起的核心情绪（用 1-2 个词）",\n    "hook_angle": "切入角度的核心洞察（30 字内，要锋利）",\n    "best_time": "建议发布时间段（结合心理抚慰内容的传播规律）"\n  },\n  "titles": [\n    { "type": "情绪共鸣型", "text": "..." },\n    { "type": "洞察金句型", "text": "..." },\n    { "type": "好奇引导型", "text": "..." }\n  ],\n  "scripts": {\n    "douyin": "60-90 秒口播脚本。开头 3 秒抓人但不要喊叫式钩子。用你称呼观众。语言口语化、有停顿感、留白。结尾不要强行升华。",\n    "xiaohongshu": "小红书图文版。第一行是标题（可带 1-2 个 emoji，但克制）。正文 200-350 字，用短段落。结尾邀请评论。最后单独一行给 5-7 个 # 话题标签。",\n    "gongzhonghao": "公众号短文版。500-800 字。引言慢，要先让读者放下防备。中段引入心理学/社会学的具体概念（要准确）。结尾留白。"\n  },\n  "cover_copy": "封面上最显眼的那句话，8-14 字",\n  "video_prompt": "AI 视频提示词：场景、光线、镜头、节奏、情绪氛围。要安静、有呼吸感。50-80 字。"\n}\n\n创作底线：不堆砌网络流行语；不做廉价情绪渲染（如"破防了""狠狠共情了"）；提到心理学概念必须准确（依恋类型、习得性无助、情绪粒度等真实概念）；给读者尊严。\n\n再次强调：只输出 JSON 对象本身，前后不要有任何其他字符。';
+    return [
+      '你是一位资深内容研究员兼策划，专精"心理学 + 社会学 + 时事"赛道。目标受众：22-40 岁城市青年，情感细腻、有阅读习惯、抵触说教与鸡汤。你的工作不是写"流量内容"，而是做"有信息密度、有温度、有思考空间"的内容研究。',
+      '',
+      '【创作基调】' + tone,
+      '【用户的想法/素材】' + idea,
+      '',
+      '请深入研究后输出完整内容包。严格输出 JSON 对象本身，不要前后任何解释、不要 markdown 围栏。结构：',
+      '',
+      '{',
+      '  "score": {',
+      '    "overall": 数字 0-100,',
+      '    "verdict": "一句话判断（如：值得做，但建议换切入角度）",',
+      '    "emotion": 0-100, "knowledge": 0-100, "viral": 0-100, "uniqueness": 0-100,',
+      '    "advice": "若分数偏低，给出改进建议；若高，给出强化建议。两三句话。"',
+      '  },',
+      '  "strategy": {',
+      '    "track": "建议赛道",',
+      '    "audience": "受众一句话画像",',
+      '    "platform_fit": "最适合的主战场及理由",',
+      '    "core_emotion": "核心情绪（1-2 词）",',
+      '    "hook_angle": "切入角度核心洞察（30 字内，要锋利）",',
+      '    "best_time": "最佳发布时段及理由"',
+      '  },',
+      '  "knowledge_anchors": [',
+      '    {',
+      '      "concept": "心理学/社会学概念名（必须是真实存在的，如：依恋理论、习得性无助、邓巴数、液态现代性、情绪粒度、镜映需求、自我损耗、社会原子化等）",',
+      '      "source": "提出者 + 年代/著作（如：约翰·鲍尔比，1969《依恋》）",',
+      '      "explain": "通俗准确解释，2-3 句，让普通人能看懂",',
+      '      "apply": "如何在本次内容中自然引用这个概念，1 句话"',
+      '    }',
+      '  ],',
+      '  "cultural_refs": [',
+      '    {',
+      '      "type": "历史典故 / 文学作品 / 经典电影 / 名人案例 / 著名研究",',
+      '      "ref": "具体名称（如：卡夫卡《变形记》、米尔格拉姆服从实验、《瓦尔登湖》、苏轼"乌台诗案"后的转变）",',
+      '      "link": "如何把它和本次主题关联起来，2-3 句"',
+      '    }',
+      '  ],',
+      '  "titles": [',
+      '    { "type": "情绪共鸣型", "text": "..." },',
+      '    { "type": "洞察金句型", "text": "..." },',
+      '    { "type": "好奇引导型", "text": "..." }',
+      '  ],',
+      '  "scripts": {',
+      '    "douyin": {',
+      '      "total_duration": "总时长，如 75 秒",',
+      '      "music_mood": "配乐氛围描述",',
+      '      "shots": [',
+      '        { "time": "0-3s", "visual": "画面描述", "narration": "口播文字", "subtitle": "屏幕字幕（可与口播略有差异）", "camera": "运镜手法", "transition": "转场到下一镜头的方式" }',
+      '      ],',
+      '      "ending_hook": "结尾留白句，让人愿意停留与回味"',
+      '    },',
+      '    "xiaohongshu": {',
+      '      "title": "笔记标题（可带 1-2 个 emoji，克制）",',
+      '      "cover_text": "封面九宫格大字，6-12 字",',
+      '      "body": "正文 250-400 字，用 \\n\\n 分段。结构：钩子 → 共鸣场景 → 知识锚点植入 → 留白结尾",',
+      '      "tags": ["话题标签1", "话题标签2", "..."],',
+      '      "cover_image_prompt": "封面图 AI 提示词，中文，描述画面元素、构图、色调、氛围"',
+      '    },',
+      '    "gongzhonghao": {',
+      '      "title": "文章标题",',
+      '      "subtitle": "副标题或导语",',
+      '      "blocks": [',
+      '        { "type": "text", "content": "段落内容" },',
+      '        { "type": "image_cue", "position": "建议配图位置说明", "prompt": "AI 配图提示词" },',
+      '        { "type": "text", "content": "..." }',
+      '      ],',
+      '      "ending": "结尾留白",',
+      '      "estimated_words": "约多少字"',
+      '    }',
+      '  },',
+      '  "visual_assets": [',
+      '    {',
+      '      "purpose": "用途（封面 / 插图 1 / 视频开场 / 等）",',
+      '      "prompt": "中文专业提示词：主体、场景、光线、色调、构图、氛围、风格（如：胶片质感 / 极简插画 / 水彩 / 电影感）",',
+      '      "negative": "需要避免的元素（如：避免人脸特写、避免过度饱和、避免文字水印）",',
+      '      "tool_suggest": "推荐工具（即梦 / 可灵 / Midjourney / Stable Diffusion）"',
+      '    }',
+      '  ],',
+      '  "distribution": {',
+      '    "audience_layers": {',
+      '      "core": "核心受众（最可能转发的人）",',
+      '      "extend": "外延受众（被算法推到的人）",',
+      '      "avoid": "不适合此内容的人群（避免硬推）"',
+      '    },',
+      '    "best_publish": {',
+      '      "douyin": "具体时段及原因",',
+      '      "xiaohongshu": "具体时段及原因",',
+      '      "gongzhonghao": "具体时段及原因"',
+      '    },',
+      '    "tags_douyin": ["实际可用的话题标签，至少5个"],',
+      '    "tags_xiaohongshu": ["实际可用的话题标签，至少7个"],',
+      '    "should_promote": "是否值得投流（dou+/薯条）+ 理由 + 预算建议",',
+      '    "series_potential": "是否适合做成系列内容 + 后续选题方向 2-3 个",',
+      '    "risk_warning": "潜在的内容风险或敏感点提醒（如有），无则填"无明显风险" "',
+      '  }',
+      '}',
+      '',
+      '【创作底线】',
+      '1. 知识锚点必须真实准确，不允许编造概念名、提出者、年代。如果不确定，宁可换一个你确定的概念。',
+      '2. 文化坐标必须真实存在，不允许杜撰书名、人物、事件。',
+      '3. 不堆砌网络流行语，不做廉价情绪渲染（"破防了""狠狠共情了"），不写鸡汤式的强行升华。',
+      '4. 给读者尊严，不把他们当需要被启蒙的人。',
+      '5. 抖音分镜要专业可执行（具体到时间、画面、运镜），不要写成大白话脚本。',
+      '6. 投放策略要具体到时段（如"工作日 22:00-23:30"），不能模糊成"晚上"。',
+      '',
+      '再次强调：只输出 JSON 对象本身，不要任何前后文字。'
+    ].join('\n');
   }
 
   generateBtn.addEventListener('click', generate);
-  ideaInput.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') generate();
-  });
 
   async function generate() {
     const idea = ideaInput.value.trim();
@@ -475,10 +728,11 @@
     generateBtn.disabled = true;
     output.classList.remove('show');
     loading.classList.add('show');
+    $('loadingSub').textContent = currentModel === 'deepseek-reasoner' ? '深度版需 30-90 秒，请耐心' : '快速版约 5-15 秒';
 
     try {
-      const result = await callDeepSeek(idea, currentTone, apiKey);
-      currentResult = { idea: idea, tone: currentTone, timestamp: new Date().toISOString() };
+      const result = await callDeepSeek(idea, currentTone, apiKey, currentModel);
+      currentResult = { idea: idea, tone: currentTone, model: currentModel, timestamp: new Date().toISOString() };
       Object.assign(currentResult, result);
       renderResult(currentResult);
     } catch (err) {
@@ -489,35 +743,34 @@
     }
   }
 
-  // 更宽容的 JSON 提取：剥掉 markdown 围栏和多余文字
   function extractJSON(str) {
     let s = String(str).trim();
-    // 去除 markdown 代码围栏
     s = s.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '');
-    // 找最外层的 {}
     const first = s.indexOf('{');
     const last = s.lastIndexOf('}');
-    if (first !== -1 && last !== -1 && last > first) {
-      s = s.slice(first, last + 1);
-    }
+    if (first !== -1 && last !== -1 && last > first) s = s.slice(first, last + 1);
     return s;
   }
 
-  async function callDeepSeek(idea, tone, apiKey) {
+  async function callDeepSeek(idea, tone, apiKey, model) {
     const prompt = buildPrompt(idea, tone);
+    const body = {
+      model: model,
+      messages: [
+        { role: 'system', content: '你是中文资深内容研究员。严格输出有效 JSON 对象本身，前后不要任何字符。' },
+        { role: 'user', content: prompt }
+      ],
+      max_tokens: 8000
+    };
+    if (model === 'deepseek-chat') {
+      body.temperature = 0.8;
+      body.response_format = { type: 'json_object' };
+    }
+
     const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-      body: JSON.stringify({
-        model: 'deepseek-chat',
-        messages: [
-          { role: 'system', content: '你是中文内容策划专家。严格输出有效 JSON 对象本身，不要任何额外文字、不要 markdown 围栏、JSON 之后不要任何字符。' },
-          { role: 'user', content: prompt }
-        ],
-        temperature: 0.8,
-        max_tokens: 3000,
-        response_format: { type: 'json_object' }
-      })
+      body: JSON.stringify(body)
     });
 
     if (!res.ok) {
@@ -529,13 +782,10 @@
     const content = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
     if (!content) throw new Error('返回内容为空');
 
-    // 三层兜底解析
-    try {
-      return JSON.parse(content);
-    } catch (e1) {
-      try {
-        return JSON.parse(extractJSON(content));
-      } catch (e2) {
+    try { return JSON.parse(content); }
+    catch (e1) {
+      try { return JSON.parse(extractJSON(content)); }
+      catch (e2) {
         console.error('原始返回:', content);
         throw new Error('AI 返回格式异常，再点一次"生成内容包"通常就好。');
       }
@@ -543,42 +793,204 @@
   }
 
   function renderResult(r) {
-    $('metaInfo').textContent = r.tone + ' · ' + new Date(r.timestamp).toLocaleString('zh-CN');
-    const s = r.strategy || {};
-    $('strategy').innerHTML =
-      '<div class="strategy-row"><div class="strategy-key">Track</div><div class="strategy-val">' + escape(s.track) + '</div></div>' +
-      '<div class="strategy-row"><div class="strategy-key">Audience</div><div class="strategy-val">' + escape(s.audience) + '</div></div>' +
-      '<div class="strategy-row"><div class="strategy-key">Platform</div><div class="strategy-val">' + escape(s.platform_fit) + '</div></div>' +
-      '<div class="strategy-row"><div class="strategy-key">Emotion</div><div class="strategy-val">' + escape(s.core_emotion) + '</div></div>' +
-      '<div class="strategy-row"><div class="strategy-key">Hook</div><div class="strategy-val">' + escape(s.hook_angle) + '</div></div>' +
-      '<div class="strategy-row"><div class="strategy-key">Timing</div><div class="strategy-val">' + escape(s.best_time) + '</div></div>';
+    $('metaInfo').textContent = (r.model === 'deepseek-reasoner' ? '深度版' : '快速版') + ' · ' + r.tone + ' · ' + new Date(r.timestamp).toLocaleString('zh-CN');
 
-    const titlesHtml = (r.titles || []).map(function(t) {
-      return '<div class="title-card">' +
-        '<div class="title-tag">' + escape(t.type) + '</div>' +
-        '<div class="title-text">' + escape(t.text) + '</div>' +
-        '<button class="copy-mini" data-copy="' + encodeURIComponent(t.text || '') + '">复制</button>' +
-        '</div>';
-    }).join('');
-    $('titles').innerHTML = titlesHtml;
-
-    const scripts = r.scripts || {};
-    $('scriptDouyin').textContent = scripts.douyin || '';
-    $('scriptXhs').textContent = scripts.xiaohongshu || '';
-    $('scriptGzh').textContent = scripts.gongzhonghao || '';
-
-    $('coverCopy').textContent = r.cover_copy || '';
-    $('videoPrompt').textContent = r.video_prompt || '';
+    renderScore(r.score || {});
+    renderStrategy(r.strategy || {});
+    renderKnowledge(r.knowledge_anchors || []);
+    renderCulture(r.cultural_refs || []);
+    renderTitles(r.titles || []);
+    renderScripts(r.scripts || {});
+    renderVisuals(r.visual_assets || []);
+    renderDistribution(r.distribution || {});
 
     output.classList.add('show');
+    bindCopyButtons();
+  }
 
-    document.querySelectorAll('.copy-mini').forEach(function(btn) {
-      btn.addEventListener('click', function() {
+  function renderScore(s) {
+    const overall = s.overall || 0;
+    let html = '<div class="score-overall">' +
+      '<div class="score-num">' + overall + '</div>' +
+      '<div><div class="score-label">overall</div>' +
+      '<div class="score-verdict">' + escape(s.verdict) + '</div></div></div>';
+
+    const dims = [
+      { key: 'emotion', label: '情绪共鸣' },
+      { key: 'knowledge', label: '知识密度' },
+      { key: 'viral', label: '传播潜力' },
+      { key: 'uniqueness', label: '差异化' }
+    ];
+    dims.forEach(d => {
+      const v = s[d.key] || 0;
+      html += '<div class="score-row">' +
+        '<div class="score-row-label">' + d.label + '</div>' +
+        '<div class="score-bar"><div class="score-bar-fill" style="width:' + v + '%"></div></div>' +
+        '<div class="score-row-num">' + v + '</div></div>';
+    });
+    if (s.advice) html += '<div class="score-advice">' + escape(s.advice) + '</div>';
+    $('scoreboard').innerHTML = html;
+  }
+
+  function renderStrategy(s) {
+    $('strategy').innerHTML =
+      row('Track', s.track) + row('Audience', s.audience) +
+      row('Platform', s.platform_fit) + row('Emotion', s.core_emotion) +
+      row('Hook', s.hook_angle) + row('Timing', s.best_time);
+  }
+  function row(k, v) {
+    return '<div class="strategy-row"><div class="strategy-key">' + k + '</div><div class="strategy-val">' + escape(v) + '</div></div>';
+  }
+
+  function renderKnowledge(arr) {
+    if (!arr.length) { $('knowledge').innerHTML = '<div class="knowledge-card">本次未生成知识锚点</div>'; return; }
+    $('knowledge').innerHTML = arr.map(k =>
+      '<div class="knowledge-card">' +
+      '<div class="knowledge-concept">' + escape(k.concept) + '</div>' +
+      '<div class="knowledge-source">— ' + escape(k.source) + '</div>' +
+      '<div class="knowledge-explain">' + escape(k.explain) + '</div>' +
+      '<div class="knowledge-apply">' + escape(k.apply) + '</div>' +
+      '</div>'
+    ).join('');
+  }
+
+  function renderCulture(arr) {
+    if (!arr.length) { $('culture').innerHTML = '<div class="culture-card">本次未生成文化坐标</div>'; return; }
+    $('culture').innerHTML = arr.map(c =>
+      '<div class="culture-card">' +
+      '<div class="culture-type">' + escape(c.type) + '</div>' +
+      '<div class="culture-ref">' + escape(c.ref) + '</div>' +
+      '<div class="culture-link">' + escape(c.link) + '</div>' +
+      '</div>'
+    ).join('');
+  }
+
+  function renderTitles(arr) {
+    $('titles').innerHTML = arr.map(t =>
+      '<div class="title-card">' +
+      '<div class="title-tag">' + escape(t.type) + '</div>' +
+      '<div class="title-text">' + escape(t.text) + '</div>' +
+      '<button class="copy-mini" data-copy="' + encodeURIComponent(t.text || '') + '">复制</button>' +
+      '</div>'
+    ).join('');
+  }
+
+  function renderScripts(s) {
+    // 抖音分镜
+    const d = s.douyin || {};
+    let dHtml = '';
+    if (d.total_duration || d.music_mood) {
+      dHtml += '<div style="margin-bottom:20px;font-size:13px;color:var(--ink-soft);">';
+      if (d.total_duration) dHtml += '<strong>时长：</strong>' + escape(d.total_duration) + '　　';
+      if (d.music_mood) dHtml += '<strong>配乐：</strong>' + escape(d.music_mood);
+      dHtml += '</div>';
+    }
+    if (d.shots && d.shots.length) {
+      dHtml += '<table class="shotlist"><thead><tr>' +
+        '<th>时间</th><th>画面</th><th>口播</th><th>字幕</th><th>运镜</th><th>转场</th>' +
+        '</tr></thead><tbody>';
+      d.shots.forEach(sh => {
+        dHtml += '<tr>' +
+          '<td class="time">' + escape(sh.time) + '</td>' +
+          '<td>' + escape(sh.visual) + '</td>' +
+          '<td class="narration">' + escape(sh.narration) + '</td>' +
+          '<td>' + escape(sh.subtitle) + '</td>' +
+          '<td>' + escape(sh.camera) + '</td>' +
+          '<td>' + escape(sh.transition) + '</td>' +
+          '</tr>';
+      });
+      dHtml += '</tbody></table>';
+    }
+    if (d.ending_hook) dHtml += '<div style="margin-top:20px;padding-top:16px;border-top:1px dashed var(--line);font-style:italic;color:var(--accent);">结尾：' + escape(d.ending_hook) + '</div>';
+    $('scriptDouyin').innerHTML = dHtml || '<p>本次未生成抖音脚本</p>';
+
+    // 小红书
+    const x = s.xiaohongshu || {};
+    let xHtml = '';
+    if (x.title) xHtml += '<div class="article-block"><div class="article-section-title">标题</div><div class="article-text" style="font-size:18px;font-weight:500;">' + escape(x.title) + '</div></div>';
+    if (x.cover_text) xHtml += '<div class="article-block"><div class="article-section-title">封面大字</div><div class="article-text">' + escape(x.cover_text) + '</div></div>';
+    if (x.body) xHtml += '<div class="article-block"><div class="article-section-title">正文</div><div class="article-text">' + escape(x.body) + '</div></div>';
+    if (x.cover_image_prompt) xHtml += '<div class="article-image-cue"><strong>封面图提示词</strong><br>' + escape(x.cover_image_prompt) + '</div>';
+    if (x.tags && x.tags.length) {
+      xHtml += '<div class="article-block"><div class="article-section-title">话题标签</div><div class="tags">';
+      x.tags.forEach(t => { xHtml += '<span class="tag-chip">#' + escape(t) + '</span>'; });
+      xHtml += '</div></div>';
+    }
+    $('scriptXhs').innerHTML = xHtml || '<p>本次未生成小红书内容</p>';
+
+    // 公众号
+    const g = s.gongzhonghao || {};
+    let gHtml = '';
+    if (g.title) gHtml += '<div class="article-block"><div class="article-section-title">标题</div><div class="article-text" style="font-size:20px;font-weight:500;">' + escape(g.title) + '</div></div>';
+    if (g.subtitle) gHtml += '<div class="article-block"><div class="article-section-title">副标题/导语</div><div class="article-text" style="font-style:italic;color:var(--ink-soft);">' + escape(g.subtitle) + '</div></div>';
+    if (g.blocks && g.blocks.length) {
+      gHtml += '<div class="article-block"><div class="article-section-title">正文</div>';
+      g.blocks.forEach(b => {
+        if (b.type === 'image_cue') {
+          gHtml += '<div class="article-image-cue"><strong>📷 配图位置：</strong>' + escape(b.position) + '<br><strong>提示词：</strong>' + escape(b.prompt) + '</div>';
+        } else {
+          gHtml += '<div class="article-text" style="margin-bottom:14px;">' + escape(b.content) + '</div>';
+        }
+      });
+      gHtml += '</div>';
+    }
+    if (g.ending) gHtml += '<div class="article-block"><div class="article-section-title">结尾</div><div class="article-text" style="font-style:italic;">' + escape(g.ending) + '</div></div>';
+    if (g.estimated_words) gHtml += '<div style="font-size:12px;color:var(--ink-mute);font-family:JetBrains Mono,monospace;letter-spacing:0.1em;">' + escape(g.estimated_words) + '</div>';
+    $('scriptGzh').innerHTML = gHtml || '<p>本次未生成公众号内容</p>';
+  }
+
+  function renderVisuals(arr) {
+    if (!arr.length) { $('visuals').innerHTML = '<p>本次未生成视觉资产</p>'; return; }
+    $('visuals').innerHTML = arr.map(v =>
+      '<div class="visual-card">' +
+      '<h4>' + escape(v.purpose) + (v.tool_suggest ? ' · 推荐：' + escape(v.tool_suggest) : '') + '</h4>' +
+      '<div class="prompt">' + escape(v.prompt) + '</div>' +
+      (v.negative ? '<div class="negative">避免：' + escape(v.negative) + '</div>' : '') +
+      '</div>'
+    ).join('');
+  }
+
+  function renderDistribution(d) {
+    const a = d.audience_layers || {};
+    const t = d.best_publish || {};
+
+    let html = '';
+    html += '<div class="strategy-block"><h4>受众三层</h4>' +
+      '<ul><li><strong>核心：</strong>' + escape(a.core) + '</li>' +
+      '<li><strong>外延：</strong>' + escape(a.extend) + '</li>' +
+      '<li><strong>避开：</strong>' + escape(a.avoid) + '</li></ul></div>';
+
+    html += '<div class="strategy-block"><h4>最佳发布时段</h4>' +
+      '<ul><li><strong>抖音：</strong>' + escape(t.douyin) + '</li>' +
+      '<li><strong>小红书：</strong>' + escape(t.xiaohongshu) + '</li>' +
+      '<li><strong>公众号：</strong>' + escape(t.gongzhonghao) + '</li></ul></div>';
+
+    html += '<div class="strategy-block"><h4>抖音话题标签</h4><div class="tags">';
+    (d.tags_douyin || []).forEach(tag => { html += '<span class="tag-chip">#' + escape(tag) + '</span>'; });
+    html += '</div></div>';
+
+    html += '<div class="strategy-block"><h4>小红书话题标签</h4><div class="tags">';
+    (d.tags_xiaohongshu || []).forEach(tag => { html += '<span class="tag-chip">#' + escape(tag) + '</span>'; });
+    html += '</div></div>';
+
+    html += '<div class="strategy-block"><h4>是否投流</h4><p>' + escape(d.should_promote) + '</p></div>';
+    html += '<div class="strategy-block"><h4>系列化潜力</h4><p>' + escape(d.series_potential) + '</p></div>';
+
+    if (d.risk_warning) {
+      html += '<div class="strategy-block" style="grid-column:1/-1;"><h4>⚠ 风险提示</h4><p>' + escape(d.risk_warning) + '</p></div>';
+    }
+
+    $('distribution').innerHTML = html;
+  }
+
+  function bindCopyButtons() {
+    document.querySelectorAll('.copy-mini').forEach(btn => {
+      btn.addEventListener('click', () => {
         const text = decodeURIComponent(btn.dataset.copy);
-        navigator.clipboard.writeText(text).then(function() {
+        navigator.clipboard.writeText(text).then(() => {
           const old = btn.textContent;
           btn.textContent = '已复制';
-          setTimeout(function() { btn.textContent = old; }, 1200);
+          setTimeout(() => { btn.textContent = old; }, 1200);
         });
       });
     });
@@ -586,9 +998,9 @@
 
   function escape(str) {
     if (str == null) return '';
-    return String(str).replace(/[&<>"']/g, function(c) {
-      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
-    });
+    return String(str).replace(/[&<>"']/g, c =>
+      ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]
+    );
   }
 
   function showError(msg) {
@@ -596,7 +1008,7 @@
     errorBox.classList.add('show');
   }
 
-  $('exportJson').addEventListener('click', function() {
+  $('exportJson').addEventListener('click', () => {
     if (!currentResult) return;
     const blob = new Blob([JSON.stringify(currentResult, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -607,7 +1019,7 @@
     URL.revokeObjectURL(url);
   });
 
-  $('saveBtn').addEventListener('click', function() {
+  $('saveBtn').addEventListener('click', () => {
     if (!currentResult) return;
     const list = JSON.parse(localStorage.getItem(STORAGE.history) || '[]');
     list.unshift(currentResult);
@@ -617,7 +1029,7 @@
     const btn = $('saveBtn');
     const old = btn.textContent;
     btn.textContent = '已保存';
-    setTimeout(function() { btn.textContent = old; }, 1500);
+    setTimeout(() => { btn.textContent = old; }, 1500);
   });
 
   function renderHistory() {
@@ -627,22 +1039,20 @@
       container.innerHTML = '<div class="history-empty">还没有保存的内容。</div>';
       return;
     }
-    container.innerHTML = list.map(function(item, i) {
-      return '<div class="history-item" data-idx="' + i + '">' +
-        '<div class="history-item-text">' + escape(item.idea) + '</div>' +
-        '<div class="history-item-time">' + new Date(item.timestamp).toLocaleDateString('zh-CN') + '</div>' +
-        '</div>';
-    }).join('');
-    container.querySelectorAll('.history-item').forEach(function(el) {
-      el.addEventListener('click', function() {
+    container.innerHTML = list.map((item, i) =>
+      '<div class="history-item" data-idx="' + i + '">' +
+      '<div class="history-item-text">' + escape(item.idea) + '</div>' +
+      '<div class="history-item-time">' + new Date(item.timestamp).toLocaleDateString('zh-CN') + '</div>' +
+      '</div>'
+    ).join('');
+    container.querySelectorAll('.history-item').forEach(el => {
+      el.addEventListener('click', () => {
         const idx = parseInt(el.dataset.idx);
         const item = list[idx];
         currentResult = item;
         ideaInput.value = item.idea;
         currentTone = item.tone;
-        document.querySelectorAll('.tone-chip').forEach(function(c) {
-          c.classList.toggle('active', c.dataset.tone === item.tone);
-        });
+        document.querySelectorAll('.tone-chip').forEach(c => c.classList.toggle('active', c.dataset.tone === item.tone));
         renderResult(item);
         window.scrollTo({ top: output.offsetTop - 40, behavior: 'smooth' });
       });
