@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>留白 · 内容研究室 v0.4</title>
+<style>
+:root{--bg:#f4f1ea;--bg2:#ebe6dc;--ink:#1f1d1a;--ink2:#4a463f;--mute:#8a8378;--line:#d9d2c2;--ac:#8b3a2f;--gr:#6b7d4f;--gd:#b8932f;--wm:#c9a876}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"Noto Serif SC","Songti SC",serif;line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased}
+.container{max-width:1100px;margin:0 auto;padding:50px 24px 100px}
+header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:50px;padding-bottom:24px;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:16px}
+h1{font-size:32px;font-weight:500}
+h1 .cn{font-size:18px;margin-left:12px;color:var(--ink2);letter-spacing:.4em}
+.sub{margin-top:8px;font-size:11px;color:var(--mute);letter-spacing:.2em;text-transform:uppercase}
+.btn{background:transparent;border:1px solid var(--line);padding:10px 18px;font-size:11px;letter-spacing:.2em;color:var(--ink2);cursor:pointer;text-transform:uppercase;font-family:inherit}
+.btn:hover{border-color:var(--ink);color:var(--ink)}
+.set{background:var(--bg2);border:1px solid var(--line);padding:24px;margin-bottom:32px;display:none}
+.set.on{display:block}
+.set label{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+.set input{width:100%;background:var(--bg);border:1px solid var(--line);padding:12px;font-size:13px;color:var(--ink);outline:none;font-family:inherit}
+.set input:focus{border-color:var(--ac)}
+.set p{margin-top:10px;font-size:12px;color:var(--mute)}
+.set a{color:var(--ac);text-decoration:none;border-bottom:1px solid var(--ac)}
+.ms{display:flex;border:1px solid var(--line);width:fit-content;margin-bottom:16px}
+.mb{background:transparent;border:none;padding:10px 18px;font-size:11px;letter-spacing:.15em;color:var(--ink2);cursor:pointer;text-transform:uppercase;border-right:1px solid var(--line);font-family:inherit}
+.mb:last-child{border-right:none}
+.mb.on{background:var(--ink);color:var(--bg)}
+.mb .l{display:block;font-size:9px;opacity:.7;margin-top:2px}
+.tc{background:var(--bg2);border-left:2px solid var(--ac);padding:14px 18px;margin-bottom:28px;font-size:13px;color:var(--ink2);line-height:1.65}
+.tc strong{color:var(--ink)}
+.tc .lab{font-size:10px;letter-spacing:.2em;color:var(--mute);text-transform:uppercase;margin-bottom:6px;display:inline-block}
+.cl{margin-bottom:24px;font-style:italic;font-size:18px;color:var(--ink2)}
+.cl .cn{font-style:normal;font-size:14px;margin-left:12px;color:var(--mute);letter-spacing:.2em}
+textarea{width:100%;min-height:120px;background:transparent;border:none;border-bottom:1px solid var(--line);padding:14px 0;font-size:20px;line-height:1.6;color:var(--ink);resize:vertical;outline:none;font-family:inherit}
+textarea:focus{border-bottom-color:var(--ac)}
+textarea::placeholder{color:var(--mute);font-style:italic}
+.act{display:flex;justify-content:space-between;align-items:center;margin-top:20px;flex-wrap:wrap;gap:12px}
+.tones{display:flex;gap:4px;flex-wrap:wrap}
+.tn{background:transparent;border:1px solid var(--line);padding:8px 14px;font-size:13px;color:var(--ink2);cursor:pointer;font-family:inherit}
+.tn:hover{border-color:var(--ink2)}
+.tn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.go{background:var(--ink);color:var(--bg);border:none;padding:14px 32px;font-size:12px;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;font-family:inherit}
+.go:hover:not(:disabled){background:var(--ac)}
+.go:disabled{opacity:.5;cursor:not-allowed}
+.err{background:#f8e8e3;border-left:3px solid var(--ac);padding:14px 18px;margin-top:16px;font-size:14px;color:var(--ac);display:none}
+.err.on{display:block}
+.load{display:none;text-align:center;padding:50px 0}
+.load.on{display:block}
+.load .t{font-style:italic;font-size:18px;color:var(--ink2)}
+.load .s{margin-top:10px;font-size:12px;color:var(--mute);letter-spacing:.2em}
+.dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--ac);margin:0 2px;animation:p 1.4s ease-in-out infinite}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes p{0%,80%,100%{opacity:.3;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+@keyframes f{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.out{display:none}
+.out.on{display:block;animation:f .5s ease}
+.meta{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:32px;font-size:11px;color:var(--mute);letter-spacing:.15em;text-transform:uppercase;flex-wrap:wrap;gap:8px}
+.meta .a{display:flex;gap:14px}
+.meta .a button{background:transparent;border:none;color:var(--ink2);cursor:pointer;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:4px 0;border-bottom:1px solid transparent;font-family:inherit}
+.meta .a button:hover{color:var(--ink);border-bottom-color:var(--ac)}
+.sec{margin-bottom:48px}
+.sh{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.sn{font-style:italic;font-size:24px;color:var(--ac)}
+.st{font-size:17px;font-weight:500;letter-spacing:.1em}
+.st .en{font-style:italic;font-size:13px;color:var(--mute);margin-left:6px;font-weight:400}
+.sb{background:var(--bg2);padding:24px;border-left:2px solid var(--ink)}
+.so{display:flex;align-items:baseline;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.son{font-size:48px;font-weight:500;line-height:1;color:var(--ac)}
+.sov{font-size:15px;font-style:italic;margin-top:4px}
+.sd{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--line)}
+.sd:last-child{border-bottom:none;padding-bottom:0}
+.sdh{display:grid;grid-template-columns:130px 1fr 50px;gap:14px;align-items:center;margin-bottom:8px}
+.sdl{font-size:14px;font-weight:500}
+.bar{height:4px;background:var(--bg);position:relative;overflow:hidden}
+.bf{position:absolute;top:0;left:0;height:100%;background:var(--ac);transition:width .8s}
+.sdn{font-size:13px;text-align:right}
+.sr{font-size:13px;color:var(--ink2);line-height:1.7}
+.sr .p{color:var(--gr)}
+.sr .m{color:var(--ac)}
+.adv{margin-top:14px;padding:12px 14px;background:var(--bg);font-size:13px;font-style:italic;color:var(--ink2);line-height:1.6}
+.str{background:var(--bg2);padding:24px;border-left:2px solid var(--ac)}
+.row{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.row:last-child{border-bottom:none}
+.rk{font-size:11px;color:var(--mute);letter-spacing:.2em;text-transform:uppercase;padding-top:3px}
+.rv{font-size:14px;line-height:1.7}
+.ev{background:var(--bg2);padding:22px 26px;border-left:2px solid var(--gr);margin-bottom:12px}
+.et{font-size:10px;color:var(--gr);letter-spacing:.25em;text-transform:uppercase;margin-bottom:8px}
+.eti{font-size:16px;font-weight:500;margin-bottom:4px}
+.es{font-style:italic;font-size:13px;color:var(--mute);margin-bottom:10px}
+.ed{font-size:14px;color:var(--ink2);line-height:1.8;margin-bottom:10px}
+.eu{padding-top:10px;border-top:1px dashed var(--line);font-size:13px;color:var(--ac);font-style:italic}
+.tt{display:grid;gap:14px}
+.ti{background:var(--bg2);padding:20px 24px;position:relative}
+.tt-tag{font-size:10px;color:var(--ac);letter-spacing:.25em;text-transform:uppercase;margin-bottom:6px}
+.tt-x{font-size:18px;font-weight:500;line-height:1.5}
+.cp{position:absolute;top:20px;right:24px;background:transparent;border:none;color:var(--mute);cursor:pointer;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:inherit}
+.cp:hover{color:var(--ac)}
+.pl{border:1px solid var(--line);background:var(--bg2)}
+.pt{display:flex;border-bottom:1px solid var(--line)}
+.pti{flex:1;background:transparent;border:none;border-right:1px solid var(--line);padding:14px;font-size:13px;color:var(--mute);cursor:pointer;font-family:inherit}
+.pti:last-child{border-right:none}
+.pti.on{background:var(--bg);color:var(--ink);font-weight:500}
+.pti .en{font-style:italic;font-size:11px;margin-left:4px;color:var(--mute)}
+.pc{padding:24px;display:none}
+.pc.on{display:block;animation:f .3s ease}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;padding:10px 6px;border-bottom:2px solid var(--line);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);font-weight:normal}
+.tbl td{padding:12px 6px;border-bottom:1px dashed var(--line);vertical-align:top;line-height:1.6;color:var(--ink2)}
+.tbl td.tm{color:var(--ac);font-size:11px;white-space:nowrap}
+.tbl td.nr{color:var(--ink);font-weight:500}
+.ab{margin-bottom:20px;padding-bottom:20px;border-bottom:1px dashed var(--line)}
+.ab:last-child{border-bottom:none}
+.ah{font-size:10px;color:var(--mute);letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px}
+.atx{font-size:15px;line-height:1.85;white-space:pre-wrap}
+.ic{background:var(--bg);border:1px dashed var(--wm);padding:10px 14px;margin:10px 0;font-size:13px;color:var(--ink2)}
+.ic strong{color:var(--gd);font-size:10px;letter-spacing:.2em}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag{background:var(--bg);border:1px solid var(--line);padding:4px 10px;font-size:12px;color:var(--ink2)}
+.vl{display:grid;gap:14px}
+.vc{background:var(--bg2);padding:20px 24px;border-top:2px solid var(--wm)}
+.vc h4{font-size:11px;color:var(--mute);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;font-weight:normal}
+.vc .pp{font-size:14px;line-height:1.75;margin-bottom:6px}
+.vc .ng{font-size:12px;color:var(--mute);padding-top:6px;border-top:1px dashed var(--line);margin-top:6px;font-style:italic}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.db{background:var(--bg2);padding:20px 24px;border-top:2px solid #b85a48}
+.db h4{font-size:11px;color:var(--mute);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;font-weight:normal}
+.db p,.db li{font-size:14px;line-height:1.8;list-style:none}
+.db li{padding:3px 0}
+.hist{margin-top:80px;padding-top:32px;border-top:1px solid var(--line)}
+.hist h3{font-style:italic;font-size:20px;color:var(--ink2);margin-bottom:18px}
+.hl{display:grid;gap:10px}
+.hi{border:1px solid var(--line);padding:14px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.hi:hover{border-color:var(--ink2);background:var(--bg2)}
+.ht{flex:1;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hd{font-size:10px;color:var(--mute);letter-spacing:.1em}
+.he{color:var(--mute);font-style:italic;font-size:15px}
+footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);text-align:center;font-size:10px;color:var(--mute);letter-spacing:.3em;text-transform:uppercase}
+@media(max-width:700px){
+.container{padding:24px 16px 60px}
+header{flex-direction:column}
+h1{font-size:26px}
+h1 .cn{display:block;margin-left:0;margin-top:4px}
+textarea{font-size:17px}
+.dg{grid-template-columns:1fr}
+.pti{font-size:12px;padding:10px 6px}
+.pti .en{display:none}
+.row{grid-template-columns:1fr;gap:4px}
+.tbl{font-size:12px}
+.tbl th,.tbl td{padding:8px 4px}
+.sdh{grid-template-columns:90px 1fr 40px;gap:8px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div>
+<h1>Liú Bái<span class="cn">留 白</span></h1>
+<div class="sub">research · lab · v0.4</div>
+</div>
+<button class="btn" id="setBtn">⚙ 设置</button>
+</header>
+
+<div class="set" id="setPanel">
+<label>DeepSeek API Key</label>
+<input type="password" id="apiKey" placeholder="sk-..." autocomplete="off"/>
+<p>Key 仅保存在浏览器本地。<a href="https://platform.deepseek.com/api_keys" target="_blank">DeepSeek 控制台 →</a></p>
+</div>
+
+<div class="ms">
+<button class="mb" data-m="deepseek-chat">快速版<span class="l">chat·快·便宜</span></button>
+<button class="mb on" data-m="deepseek-reasoner">深度版<span class="l">reasoner·慢·高质</span></button>
+</div>
+
+<div class="tc" id="tc"></div>
+
+<div class="cl"><i>A thought worth holding</i><span class="cn">一个值得停留的念头</span></div>
+<textarea id="idea" placeholder="比如：年轻人开始害怕接电话了……"></textarea>
+<div class="act">
+<div class="tones" id="tones">
+<button class="tn on" data-t="温柔抚慰">温柔抚慰</button>
+<button class="tn" data-t="清醒共情">清醒共情</button>
+<button class="tn" data-t="社会观察">社会观察</button>
+<button class="tn" data-t="心理科普">心理科普</button>
+</div>
+<button class="go" id="go">生成内容包 →</button>
+</div>
+<div class="err" id="err"></div>
+
+<div class="load" id="load">
+<div class="t">正在思考<span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+<div class="s" id="ls">深度版需 90-120 秒，请耐心</div>
+</div>
+
+<div class="out" id="out">
+<div class="meta">
+<span id="mi">— · —</span>
+<div class="a">
+<button id="exp">导出 JSON</button>
+<button id="sav">存入历史</button>
+</div>
+</div>
+
+<div class="sec"><div class="sh"><div class="sn">i</div><div class="st">价值评分<span class="en">scoring</span></div></div><div class="sb" id="sc"></div></div>
+<div class="sec"><div class="sh"><div class="sn">ii</div><div class="st">策略判断<span class="en">strategy</span></div></div><div class="str" id="strat"></div></div>
+<div class="sec"><div class="sh"><div class="sn">iii</div><div class="st">证据池<span class="en">evidence</span></div></div><div id="evi"></div></div>
+<div class="sec"><div class="sh"><div class="sn">iv</div><div class="st">标题三种<span class="en">three voices</span></div></div><div class="tt" id="tit"></div></div>
+<div class="sec">
+<div class="sh"><div class="sn">v</div><div class="st">三平台脚本<span class="en">scripts</span></div></div>
+<div class="pl">
+<div class="pt">
+<button class="pti on" data-p="d">抖音分镜<span class="en">Douyin</span></button>
+<button class="pti" data-p="x">小红书<span class="en">XHS</span></button>
+<button class="pti" data-p="g">公众号<span class="en">WeChat</span></button>
+</div>
+<div class="pc on" data-p="d"><div id="sd"></div></div>
+<div class="pc" data-p="x"><div id="sx"></div></div>
+<div class="pc" data-p="g"><div id="sg"></div></div>
+</div>
+</div>
+<div class="sec"><div class="sh"><div class="sn">vi</div><div class="st">视觉资产<span class="en">visuals</span></div></div><div class="vl" id="vis"></div></div>
+<div class="sec"><div class="sh"><div class="sn">vii</div><div class="st">投放策略<span class="en">distribution</span></div></div><div class="dg" id="dist"></div></div>
+</div>
+
+<div class="hist">
+<h3>已存内容 <span style="font-size:13px;color:var(--mute);letter-spacing:.2em;font-style:normal;margin-left:8px">历 史</span></h3>
+<div class="hl" id="hl"><div class="he">还没有保存的内容。</div></div>
+</div>
+
+<footer>Stage 0 · v0.4 · Tone-Specialized</footer>
+</div>
+
+<script>
+const ST={k:'liubai_apikey',h:'liubai_history',t:'liubai_tone',m:'liubai_model'};
+let R=null,T='温柔抚慰',M='deepseek-reasoner';
+const $=i=>document.getElementById(i);
+
+const TM={
+'温柔抚慰':{
+d:'<span class="lab">场景陪伴 · 模式</span><strong>核心：</strong>不解释、不分析、不升华。用一个具体到能闻到味道的场景，让读者感觉"被看见"。<br><strong>语感参考：</strong>李娟、张定浩、周晓枫的散文笔法。',
+p:'【本次模式：场景陪伴·温柔抚慰】\n你不是评论员、不是分析师、不是讲道理的人。你是一个安静的陪伴者。\n\n必须做到：\n1.开头从一个具体的、可触摸的、有时间地点的场景进入。例如不要写"很多人都有焦虑"，而要写"凌晨两点，她第三次起来检查门是不是锁了"。\n2.全文至少2处感官细节：声音、光线、气味、温度、身体姿态。\n3.引用一段真实的文学/电影/诗歌片段（李娟、史铁生、塞林格、是枝裕和等真实存在的）。\n4.不要解释为什么、不要给该怎么办。只是陪着。\n5.结尾不升华、不金句、不号召。\n\n严格禁止："其实/我们常常/很多时候/一直以来"等模糊群体修辞；"温柔的/治愈的/有质感的/高级的"空泛形容词；"不是X而是Y"对仗排比；"请记得/愿你/希望你"虚浮祝福；强行升华金句结尾。\n\n语感参考：李娟《我的阿勒泰》的不动声色，张定浩的克制，周晓枫的物质感。'
+},
+'清醒共情':{
+d:'<span class="lab">认知重构 · 模式</span><strong>核心：</strong>拆解一个常见误解，给一个新视角，让人"哦原来是这样"。<br><strong>语感参考：</strong>梁文道、罗翔、李松蔚。',
+p:'【本次模式：认知重构·清醒共情】\n你是一个懂心理学也懂逻辑的好朋友。你不安慰人，因为你知道安慰常常是廉价的。你只是把对方卡住的认知死结松开。\n\n必须做到：\n1.开头点出读者最可能持有的一个误解或自我归因。例如"你以为你害怕的是接电话——其实你害怕的是被迫即时回应"。\n2.用逻辑递进展开（A推出B，B推出C）。\n3.必须引入1个真实存在的心理学/哲学概念作为认知工具（归因偏差、防御性悲观、镜映需求、加缪的荒诞等），并简短解释。\n4.必须给出一个具体案例或思想实验（真实人物、文学人物、罗翔式法律案例）。\n5.结尾不是"所以你要xxx"，而是给出一个新的看待问题的角度。\n\n严格禁止：任何形式的廉价安慰；"破防/拿捏/狠狠/yyds"等流行语；三段式排比对仗的强行升华；把心理学概念当装饰品。\n\n语感参考：梁文道《常识》的克制说理，罗翔讲案例的方式，李松蔚不站队的语气。'
+},
+'社会观察':{
+d:'<span class="lab">结构分析 · 模式</span><strong>核心：</strong>把"个人困境"翻译成"系统性现象"。<br><strong>语感参考：</strong>项飙、严飞、何伟、《十三邀》。',
+p:'【本次模式：结构分析·社会观察】\n你是一个人类学/社会学视角的观察者。你的工作是把读者从"为什么我这样"的自我审判中拉出来，让他看见"是什么样的社会结构在批量生产这种处境"。\n\n必须做到：\n1.开头描述一个具体的、当下的、可被读者认领的现象。\n2.必须使用结构性视角：经济结构/技术变迁/城乡关系/代际差异/性别脚本之一。把个体痛苦链接到结构压力。\n3.引用1个真实社会学/人类学概念或一项真实研究（项飙"附近的消失"、阎云翔"私人生活的变革"、Hochschild"情感劳动"、邓巴数、液态现代性等），明确出处。\n4.至少给出1个具体数据/案例/田野观察作为证据。\n5.结尾不要个体励志，要给出结构层面的理解。\n\n严格禁止：个人主义归因（"还是要靠自己/心态决定一切"）；"卷/躺/润"等已被滥用的网络词；把社会学概念当标签贴；"愿我们都xxx"式结尾。\n\n语感参考：项飙《把自己作为方法》的访谈语气，严飞《穿透》的写法。'
+},
+'心理科普':{
+d:'<span class="lab">知识传递 · 模式</span><strong>核心：</strong>清晰传递一个心理学概念，让读者获得新的"认知工具"。<br><strong>语感参考：</strong>李松蔚、陈海贤、卡尼曼。',
+p:'【本次模式：知识传递·心理科普】\n你是一个能把心理学说人话的科普作者。你的目标不是抚慰、不是分析社会，而是让读者学到一个具体的、能用的认知工具。\n\n必须做到：\n1.全文围绕1个核心心理学概念展开（情绪粒度、认知失调、习得性无助、防御性悲观、自我损耗、依恋类型等真实概念）。不要塞多个。\n2.必须包含：概念定义→提出者及研究→一个经典实验或案例→在日常生活中的识别方式→一个简单的自检/应用方法。\n3.引用真实研究时必须给出研究者姓名和大致年代（如"1965年塞利格曼电击狗实验""卡尼曼与特沃斯基的前景理论"）。\n4.用一个具体的、可被读者代入的小情景演示这个概念。\n5.结尾给一个可操作的小练习或观察清单。\n\n严格禁止：情绪化表达（"真的太懂了/破防"）；编造研究、年代、人名；把概念讲完不给应用方法；多个概念混着讲。\n\n语感参考：李松蔚公众号"先讲故事再点概念"，陈海贤《了不起的我》的口语化精确，卡尼曼用日常例子讲诺奖级理论。'
+}};
+
+$('apiKey').value=localStorage.getItem(ST.k)||'';
+$('apiKey').addEventListener('input',()=>localStorage.setItem(ST.k,$('apiKey').value.trim()));
+const sT=localStorage.getItem(ST.t);
+if(sT&&TM[sT]){T=sT;document.querySelectorAll('.tn').forEach(c=>c.classList.toggle('on',c.dataset.t===sT))}
+const sM=localStorage.getItem(ST.m);
+if(sM){M=sM;document.querySelectorAll('.mb').forEach(b=>b.classList.toggle('on',b.dataset.m===sM))}
+function uTC(){$('tc').innerHTML=TM[T].d}
+uTC();
+$('setBtn').addEventListener('click',()=>$('setPanel').classList.toggle('on'));
+document.querySelectorAll('.tn').forEach(c=>c.addEventListener('click',()=>{
+document.querySelectorAll('.tn').forEach(x=>x.classList.remove('on'));
+c.classList.add('on');T=c.dataset.t;localStorage.setItem(ST.t,T);uTC();
+}));
+document.querySelectorAll('.mb').forEach(b=>b.addEventListener('click',()=>{
+document.querySelectorAll('.mb').forEach(x=>x.classList.remove('on'));
+b.classList.add('on');M=b.dataset.m;localStorage.setItem(ST.m,M);
+$('ls').textContent=M==='deepseek-reasoner'?'深度版需 90-120 秒，请耐心':'快速版约 10-20 秒';
+}));
+document.querySelectorAll('.pti').forEach(t=>t.addEventListener('click',()=>{
+const p=t.dataset.p;
+document.querySelectorAll('.pti').forEach(x=>x.classList.remove('on'));
+document.querySelectorAll('.pc').forEach(x=>x.classList.remove('on'));
+t.classList.add('on');
+document.querySelector('.pc[data-p="'+p+'"]').classList.add('on');
+}));
+
+function bP(idea,tone){
+const ts=TM[tone].p;
+return '你是一位资深内容研究员兼策划，专精"心理学+社会学+时事"赛道。目标受众：22-40岁城市青年，情感细腻、有阅读习惯、抵触说教与鸡汤、对AI味敏感。\n\n'+ts+'\n\n【用户的想法/素材】\n'+idea+'\n\n请深入研究后输出完整内容包。严格输出JSON对象本身，不要前后任何解释、不要markdown围栏。\n\n输出JSON结构：\n{\n"score":{"overall":0-100,"verdict":"一句话判断","knowledge_density":{"score":0-100,"plus":["加分点"],"minus":["扣分点"]},"emotional_concreteness":{"score":0-100,"plus":[],"minus":[]},"ai_trace":{"score":0-100越低越好,"detected_patterns":["发现的AI痕迹"],"verdict":"轻微/中度/严重"},"advice":"改进建议"},\n"strategy":{"track":"赛道","audience":"受众画像","platform_fit":"主战场","core_emotion":"核心情绪","hook_angle":"切入角度","best_time":"最佳发布时段"},\n"evidence_pool":[{"type":"心理学概念/社会学研究/历史典故/文学作品/真实案例/经典实验/电影场景","title":"具体名称","source":"提出者+年代/出处","detail":"详细说明3-4句","usage":"本次内容如何使用它"}],\n"titles":[{"type":"情绪共鸣型","text":"..."},{"type":"洞察金句型","text":"..."},{"type":"好奇引导型","text":"..."}],\n"scripts":{"douyin":{"total_duration":"75秒","music_mood":"配乐氛围","shots":[{"time":"0-3s","visual":"画面","narration":"口播","subtitle":"字幕","camera":"运镜","transition":"转场"}],"ending_hook":"结尾留白句"},"xiaohongshu":{"title":"标题","cover_text":"封面6-12字","body":"正文250-400字用\\n\\n分段，必须织入证据池中至少1个真实素材","tags":["话题"],"cover_image_prompt":"封面图AI提示词"},"gongzhonghao":{"title":"标题","subtitle":"副标题","blocks":[{"type":"text","content":"段落（必须织入证据）"},{"type":"image_cue","position":"建议配图位置","prompt":"AI配图提示词"}],"ending":"结尾","estimated_words":"约多少字"}},\n"visual_assets":[{"purpose":"用途","prompt":"中文专业提示词","negative":"避免元素","tool_suggest":"推荐工具"}],\n"distribution":{"audience_layers":{"core":"核心受众","extend":"外延受众","avoid":"避开人群"},"best_publish":{"douyin":"时段+原因","xiaohongshu":"时段+原因","gongzhonghao":"时段+原因"},"tags_douyin":["至少5个"],"tags_xiaohongshu":["至少7个"],"should_promote":"是否投流+理由+预算建议","series_potential":"是否系列化+后续选题2-3个","risk_warning":"潜在风险或填无明显风险"}\n}\n\n【全局创作底线】\n1.证据真实性：所有引用的概念、研究、人物、作品必须真实存在，不允许编造。\n2.证据必须织入正文：evidence_pool列出的素材必须在scripts中实际使用。\n3.AI痕迹规避：禁止"不是X而是Y"对仗、"其实/我们/很多时候"等模糊修辞、"温柔的/治愈的/有质感的"空泛形容词、"请记得/愿你/希望你"虚浮祝福、强行升华金句结尾。\n4.内容原创：禁止抄袭已发表段落、金句、网络热梗。\n5.作者视角：以具体作者口吻写作，不要标准化AI语气。\n6.评分必须有依据：每个分数附具体加分点和扣分点。\n7.AI痕迹自检：写完后审视一遍，标出最像AI的句子模式。\n\n再次强调：只输出JSON对象本身。';
+}
+
+$('go').addEventListener('click',gen);
+async function gen(){
+const idea=$('idea').value.trim(),k=$('apiKey').value.trim();
+$('err').classList.remove('on');
+if(!idea){eR('先写下你的想法吧。');return}
+if(!k){eR('请先在右上角"设置"里填入 DeepSeek API Key。');$('setPanel').classList.add('on');return}
+$('go').disabled=true;$('out').classList.remove('on');$('load').classList.add('on');
+$('ls').textContent=M==='deepseek-reasoner'?'深度版需 90-120 秒，请耐心':'快速版约 10-20 秒';
+try{
+const r=await call(idea,T,k,M);
+R={idea,tone:T,model:M,timestamp:new Date().toISOString()};
+Object.assign(R,r);rd(R);
+}catch(e){eR(e.message||'生成失败，请稍后重试。')}
+finally{$('go').disabled=false;$('load').classList.remove('on')}
+}
+
+function xJ(s){
+let x=String(s).trim();
+x=x.replace(/^```(?:json)?\s*/i,'').replace(/\s*```\s*$/i,'');
+const a=x.indexOf('{'),b=x.lastIndexOf('}');
+if(a!==-1&&b!==-1&&b>a)x=x.slice(a,b+1);
+return x;
+}
+
+async function call(idea,t,k,m){
+const p=bP(idea,t);
+const b={model:m,messages:[{role:'system',content:'你是中文资深内容研究员。严格输出有效JSON对象本身，前后不要任何字符。'},{role:'user',content:p}],max_tokens:8000};
+if(m==='deepseek-chat'){b.temperature=.85;b.response_format={type:'json_object'}}
+const r=await fetch('https://api.deepseek.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify(b)});
+if(!r.ok){const e=await r.text();throw new Error('DeepSeek API错误('+r.status+')：'+e.slice(0,200))}
+const d=await r.json();
+const c=d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content;
+if(!c)throw new Error('返回内容为空');
+try{return JSON.parse(c)}
+catch(e1){try{return JSON.parse(xJ(c))}catch(e2){console.error('原始返回:',c);throw new Error('AI返回格式异常，再点一次"生成内容包"通常就好。')}}
+}
+
+function rd(r){
+$('mi').textContent=(r.model==='deepseek-reasoner'?'深度版':'快速版')+' · '+r.tone+' · '+new Date(r.timestamp).toLocaleString('zh-CN');
+rS(r.score||{});rSt(r.strategy||{});rE(r.evidence_pool||[]);rT(r.titles||[]);rSc(r.scripts||{});rV(r.visual_assets||[]);rD(r.distribution||{});
+$('out').classList.add('on');bC();
+}
+
+function rS(s){
+let h='<div class="so"><div class="son">'+(s.overall||0)+'</div><div><div style="font-size:11px;color:var(--mute);letter-spacing:.2em;text-transform:uppercase">overall</div><div class="sov">'+esc(s.verdict)+'</div></div></div>';
+const D=[{k:'knowledge_density',l:'知识密度',i:false},{k:'emotional_concreteness',l:'情绪具象度',i:false},{k:'ai_trace',l:'AI 痕迹（越低越好）',i:true}];
+D.forEach(d=>{
+const x=s[d.k]||{},v=x.score||0,bv=d.i?(100-v):v;
+h+='<div class="sd"><div class="sdh"><div class="sdl">'+d.l+'</div><div class="bar"><div class="bf" style="width:'+bv+'%"></div></div><div class="sdn">'+v+'</div></div><div class="sr">';
+if(x.plus&&x.plus.length)x.plus.forEach(p=>h+='<div class="p">+ '+esc(p)+'</div>');
+if(x.minus&&x.minus.length)x.minus.forEach(m=>h+='<div class="m">− '+esc(m)+'</div>');
+if(x.detected_patterns&&x.detected_patterns.length)x.detected_patterns.forEach(p=>h+='<div class="m">⚠ '+esc(p)+'</div>');
+if(x.verdict)h+='<div style="margin-top:4px;font-style:italic">判定：'+esc(x.verdict)+'</div>';
+h+='</div></div>';
+});
+if(s.advice)h+='<div class="adv">'+esc(s.advice)+'</div>';
+$('sc').innerHTML=h;
+}
+
+function rSt(s){
+$('strat').innerHTML=rw('Track',s.track)+rw('Audience',s.audience)+rw('Platform',s.platform_fit)+rw('Emotion',s.core_emotion)+rw('Hook',s.hook_angle)+rw('Timing',s.best_time);
+}
+function rw(k,v){return '<div class="row"><div class="rk">'+k+'</div><div class="rv">'+esc(v)+'</div></div>'}
+
+function rE(a){
+if(!a.length){$('evi').innerHTML='<div class="ev">本次未生成证据池</div>';return}
+$('evi').innerHTML=a.map(e=>'<div class="ev"><div class="et">'+esc(e.type)+'</div><div class="eti">'+esc(e.title)+'</div><div class="es">— '+esc(e.source)+'</div><div class="ed">'+esc(e.detail)+'</div><div class="eu">→ 用法：'+esc(e.usage)+'</div></div>').join('');
+}
+
+function rT(a){
+$('tit').innerHTML=a.map(t=>'<div class="ti"><div class="tt-tag">'+esc(t.type)+'</div><div class="tt-x">'+esc(t.text)+'</div><button class="cp" data-c="'+encodeURIComponent(t.text||'')+'">复制</button></div>').join('');
+}
+
+function rSc(s){
+const d=s.douyin||{};let dh='';
+if(d.total_duration||d.music_mood){dh+='<div style="margin-bottom:16px;font-size:13px;color:var(--ink2)">';if(d.total_duration)dh+='<strong>时长：</strong>'+esc(d.total_duration)+'　　';if(d.music_mood)dh+='<strong>配乐：</strong>'+esc(d.music_mood);dh+='</div>'}
+if(d.shots&&d.shots.length){
+dh+='<table class="tbl"><thead><tr><th>时间</th><th>画面</th><th>口播</th><th>字幕</th><th>运镜</th><th>转场</th></tr></thead><tbody>';
+d.shots.forEach(sh=>{dh+='<tr><td class="tm">'+esc(sh.time)+'</td><td>'+esc(sh.visual)+'</td><td class="nr">'+esc(sh.narration)+'</td><td>'+esc(sh.subtitle)+'</td><td>'+esc(sh.camera)+'</td><td>'+esc(sh.transition)+'</td></tr>'});
+dh+='</tbody></table>';
+}
+if(d.ending_hook)dh+='<div style="margin-top:16px;padding-top:12px;border-top:1px dashed var(--line);font-style:italic;color:var(--ac)">结尾：'+esc(d.ending_hook)+'</div>';
+$('sd').innerHTML=dh||'<p>本次未生成抖音脚本</p>';
+
+const x=s.xiaohongshu||{};let xh='';
+if(x.title)xh+='<div class="ab"><div class="ah">标题</div><div class="atx" style="font-size:17px;font-weight:500">'+esc(x.title)+'</div></div>';
+if(x.cover_text)xh+='<div class="ab"><div class="ah">封面大字</div><div class="atx">'+esc(x.cover_text)+'</div></div>';
+if(x.body)xh+='<div class="ab"><div class="ah">正文</div><div class="atx">'+esc(x.body)+'</div></div>';
+if(x.cover_image_prompt)xh+='<div class="ic"><strong>封面图提示词</strong><br>'+esc(x.cover_image_prompt)+'</div>';
+if(x.tags&&x.tags.length){xh+='<div class="ab"><div class="ah">话题标签</div><div class="tags">';x.tags.forEach(t=>xh+='<span class="tag">#'+esc(t)+'</span>');xh+='</div></div>'}
+$('sx').innerHTML=xh||'<p>本次未生成小红书内容</p>';
+
+const g=s.gongzhonghao||{};let gh='';
+if(g.title)gh+='<div class="ab"><div class="ah">标题</div><div class="atx" style="font-size:19px;font-weight:500">'+esc(g.title)+'</div></div>';
+if(g.subtitle)gh+='<div class="ab"><div class="ah">副标题</div><div class="atx" style="font-style:italic;color:var(--ink2)">'+esc(g.subtitle)+'</div></div>';
+if(g.blocks&&g.blocks.length){
+gh+='<div class="ab"><div class="ah">正文</div>';
+g.blocks.forEach(b=>{
+if(b.type==='image_cue')gh+='<div class="ic"><strong>📷 配图位置：</strong>'+esc(b.position)+'<br><strong>提示词：</strong>'+esc(b.prompt)+'</div>';
+else gh+='<div class="atx" style="margin-bottom:12px">'+esc(b.content)+'</div>';
+});
+gh+='</div>';
+}
+if(g.ending)gh+='<div class="ab"><div class="ah">结尾</div><div class="atx" style="font-style:italic">'+esc(g.ending)+'</div></div>';
+if(g.estimated_words)gh+='<div style="font-size:12px;color:var(--mute);letter-spacing:.1em">'+esc(g.estimated_words)+'</div>';
+$('sg').innerHTML=gh||'<p>本次未生成公众号内容</p>';
+}
+
+function rV(a){
+if(!a.length){$('vis').innerHTML='<p>本次未生成视觉资产</p>';return}
+$('vis').innerHTML=a.map(v=>'<div class="vc"><h4>'+esc(v.purpose)+(v.tool_suggest?' · 推荐：'+esc(v.tool_suggest):'')+'</h4><div class="pp">'+esc(v.prompt)+'</div>'+(v.negative?'<div class="ng">避免：'+esc(v.negative)+'</div>':'')+'</div>').join('');
+}
+
+function rD(d){
+const a=d.audience_layers||{},t=d.best_publish||{};let h='';
+h+='<div class="db"><h4>受众三层</h4><ul><li><strong>核心：</strong>'+esc(a.core)+'</li><li><strong>外延：</strong>'+esc(a.extend)+'</li><li><strong>避开：</strong>'+esc(a.avoid)+'</li></ul></div>';
+h+='<div class="db"><h4>最佳发布时段</h4><ul><li><strong>抖音：</strong>'+esc(t.douyin)+'</li><li><strong>小红书：</strong>'+esc(t.xiaohongshu)+'</li><li><strong>公众号：</strong>'+esc(t.gongzhonghao)+'</li></ul></div>';
+h+='<div class="db"><h4>抖音话题标签</h4><div class="tags">';(d.tags_douyin||[]).forEach(g=>h+='<span class="tag">#'+esc(g)+'</span>');h+='</div></div>';
+h+='<div class="db"><h4>小红书话题标签</h4><div class="tags">';(d.tags_xiaohongshu||[]).forEach(g=>h+='<span class="tag">#'+esc(g)+'</span>');h+='</div></div>';
+h+='<div class="db"><h4>是否投流</h4><p>'+esc(d.should_promote)+'</p></div>';
+h+='<div class="db"><h4>系列化潜力</h4><p>'+esc(d.series_potential)+'</p></div>';
+if(d.risk_warning)h+='<div class="db" style="grid-column:1/-1"><h4>⚠ 风险提示</h4><p>'+esc(d.risk_warning)+'</p></div>';
+$('dist').innerHTML=h;
+}
+
+function bC(){
+document.querySelectorAll('.cp').forEach(b=>b.addEventListener('click',()=>{
+const t=decodeURIComponent(b.dataset.c);
+navigator.clipboard.writeText(t).then(()=>{const o=b.textContent;b.textContent='已复制';setTimeout(()=>b.textContent=o,1200)});
+}));
+}
+
+function esc(s){if(s==null)return '';return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c])}
+function eR(m){$('err').textContent=m;$('err').classList.add('on')}
+
+$('exp').addEventListener('click',()=>{
+if(!R)return;
+const b=new Blob([JSON.stringify(R,null,2)],{type:'application/json'});
+const u=URL.createObjectURL(b),a=document.createElement('a');
+a.href=u;a.download='liubai_'+Date.now()+'.json';a.click();URL.revokeObjectURL(u);
+});
+
+$('sav').addEventListener('click',()=>{
+if(!R)return;
+const l=JSON.parse(localStorage.getItem(ST.h)||'[]');
+l.unshift(R);if(l.length>50)l.pop();
+localStorage.setItem(ST.h,JSON.stringify(l));rH();
+const b=$('sav'),o=b.textContent;b.textContent='已保存';setTimeout(()=>b.textContent=o,1500);
+});
+
+function rH(){
+const l=JSON.parse(localStorage.getItem(ST.h)||'[]'),c=$('hl');
+if(l.length===0){c.innerHTML='<div class="he">还没有保存的内容。</div>';return}
+c.innerHTML=l.map((it,i)=>'<div class="hi" data-i="'+i+'"><div class="ht">'+esc(it.idea)+'</div><div class="hd">'+new Date(it.timestamp).toLocaleDateString('zh-CN')+'</div></div>').join('');
+c.querySelectorAll('.hi').forEach(e=>e.addEventListener('click',()=>{
+const it=l[parseInt(e.dataset.i)];
+R=it;$('idea').value=it.idea;T=it.tone;
+if(TM[it.tone])uTC();
+document.querySelectorAll('.tn').forEach(c=>c.classList.toggle('on',c.dataset.t===it.tone));
+rd(it);window.scrollTo({top:$('out').offsetTop-40,behavior:'smooth'});
+}));
+}
+rH();
+</script>
+</body>
+</html>
